@@ -193,10 +193,6 @@ RecipeShare to platforma społecznościowa dedykowana miłośnikom gotowania, kt
    - Przeprowadzenie testów wydajnościowych i bezpieczeństwa.
    - Wprowadzanie poprawek oraz optymalizacji.
 
-5. **Wdrożenie i utrzymanie (ciągłe):**
-   - Publikacja aplikacji w App Store, Google Play oraz Microsoft Store.
-   - Monitorowanie działania systemu, wsparcie techniczne i rozwój nowych funkcji.
-
 ### Szacowany czas realizacji:
 - Całkowity czas realizacji: około **11–12 tygodni**.
 
