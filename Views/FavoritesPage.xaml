@@ -1,0 +1,52 @@
+<ContentPage 
+    x:Class="RecipeShare.FavoritesPage"
+    x:Name="FavoritesPageRef"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:RecipeShare.ViewModels"
+    Title="Ulubione">
+
+  <ContentPage.BindingContext>
+    <vm:FavoritesViewModel/>
+  </ContentPage.BindingContext>
+
+  <StackLayout Padding="10">
+    <Label Text="Ulubione przepisy" 
+           FontSize="24" 
+           FontAttributes="Bold" 
+           HorizontalOptions="Center"/>
+
+    <CollectionView ItemsSource="{Binding FavoriteRecipes}">
+      <CollectionView.ItemTemplate>
+        <DataTemplate>
+          <SwipeView>
+            <!-- Przy przesunięciu ujawnia się przycisk usuwania -->
+            <SwipeView.RightItems>
+              <SwipeItems Mode="Reveal">
+                <SwipeItem 
+                    Text="Usuń"
+                    IconImageSource="delete.svg"
+                    BackgroundColor="Red"
+                    Command="{Binding Source={x:Reference FavoritesPageRef}, Path=BindingContext.RemoveFavoriteCommand}"
+                    CommandParameter="{Binding .}" />
+              </SwipeItems>
+            </SwipeView.RightItems>
+            <!-- Główna zawartość elementu -->
+            <SwipeView.Content>
+              <Frame Margin="10" Padding="10" HasShadow="True" CornerRadius="10">
+                <StackLayout>
+                  <Label Text="{Binding Title}" 
+                         FontAttributes="Bold" 
+                         FontSize="18"/>
+                  <Label Text="{Binding Description}" 
+                         FontSize="14" 
+                         LineBreakMode="TailTruncation"/>
+                </StackLayout>
+              </Frame>
+            </SwipeView.Content>
+          </SwipeView>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+    </CollectionView>
+  </StackLayout>
+</ContentPage>
