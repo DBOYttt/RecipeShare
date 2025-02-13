@@ -100,9 +100,6 @@ RecipeShare to platforma społecznościowa dedykowana miłośnikom gotowania, kt
 - **XAML:**  
   Język deklaratywny do projektowania interfejsu użytkownika.
 
-- **ASP.NET Core (opcjonalnie):**  
-  Backend realizowany jako RESTful API do obsługi logiki biznesowej i operacji na bazie danych.
-
 - **Baza danych:**  
   SQL Server lub SQLite, w zależności od wymagań i skali projektu.
 
