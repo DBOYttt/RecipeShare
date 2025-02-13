@@ -1,0 +1,394 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\4a\\source\\repos\\RecipeShare\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\viewmodels\\mainpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:viewmodels\\mainpageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\converters\\favoritetextconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:converters\\favoritetextconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\converters\\favoriteiconconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:converters\\favoriteiconconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\favoritespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\favoritespage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\viewmodels\\favoritesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:viewmodels\\favoritesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\viewmodels\\addrecipeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:viewmodels\\addrecipeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\converters\\favoritebackgroundconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:converters\\favoritebackgroundconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\model\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:model\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\model\\recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:model\\recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\recipedetailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\recipedetailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\favoritespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\favoritespage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\recipedetailpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\recipedetailpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\viewmodels\\recipedetailviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:viewmodels\\recipedetailviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\profilepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\profilepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\profilepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\profilepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\addrecipepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\addrecipepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\views\\addrecipepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:views\\addrecipepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|c:\\users\\4a\\source\\repos\\recipeshare\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE8EEB6C-DBC4-4EEA-A2C2-4545C4643AD7}|RecipeShare.csproj|solutionrelative:appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FavoritesPage.xaml",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\FavoritesPage.xaml",
+              "RelativeDocumentMoniker": "Views\\FavoritesPage.xaml",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\FavoritesPage.xaml",
+              "RelativeToolTip": "Views\\FavoritesPage.xaml",
+              "ViewState": "AQIAAAgAAAAAAAAAAAD4vxkAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-13T09:32:29.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "AddRecipePage.xaml",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\AddRecipePage.xaml",
+              "RelativeDocumentMoniker": "Views\\AddRecipePage.xaml",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\AddRecipePage.xaml",
+              "RelativeToolTip": "Views\\AddRecipePage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-13T09:31:48.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RecipeDetailPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\RecipeDetailPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\RecipeDetailPage.xaml.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\RecipeDetailPage.xaml.cs",
+              "RelativeToolTip": "Views\\RecipeDetailPage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:29:39.341Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "RecipeDetailPage.xaml",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\RecipeDetailPage.xaml",
+              "RelativeDocumentMoniker": "Views\\RecipeDetailPage.xaml",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\RecipeDetailPage.xaml",
+              "RelativeToolTip": "Views\\RecipeDetailPage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-13T09:29:10.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\MainPage.xaml.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\MainPage.xaml.cs",
+              "RelativeToolTip": "Views\\MainPage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:18:53.139Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\MainPage.xaml",
+              "RelativeDocumentMoniker": "Views\\MainPage.xaml",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\MainPage.xaml",
+              "RelativeToolTip": "Views\\MainPage.xaml",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAB8AAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-13T09:07:19.62Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAABCAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-13T09:58:29.581Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FavoritesViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\FavoritesViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\FavoritesViewModel.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\FavoritesViewModel.cs",
+              "RelativeToolTip": "ViewModels\\FavoritesViewModel.cs",
+              "ViewState": "AQIAACkAAAAAAAAAAAAwwBYAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T10:09:01.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainPageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\MainPageViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\MainPageViewModel.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\MainPageViewModel.cs",
+              "RelativeToolTip": "ViewModels\\MainPageViewModel.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAYwCwAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:25:10.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FavoriteTextConverter.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Converters\\FavoriteTextConverter.cs",
+              "RelativeDocumentMoniker": "Converters\\FavoriteTextConverter.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Converters\\FavoriteTextConverter.cs",
+              "RelativeToolTip": "Converters\\FavoriteTextConverter.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:58:12.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FavoriteIconConverter.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Converters\\FavoriteIconConverter.cs",
+              "RelativeDocumentMoniker": "Converters\\FavoriteIconConverter.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Converters\\FavoriteIconConverter.cs",
+              "RelativeToolTip": "Converters\\FavoriteIconConverter.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T10:32:31.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AddRecipePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\AddRecipePage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\AddRecipePage.xaml.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\AddRecipePage.xaml.cs",
+              "RelativeToolTip": "Views\\AddRecipePage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:32:08.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AddRecipeViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\AddRecipeViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\AddRecipeViewModel.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\AddRecipeViewModel.cs",
+              "RelativeToolTip": "ViewModels\\AddRecipeViewModel.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAQwBUAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:30:49.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FavoriteBackgroundConverter.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Converters\\FavoriteBackgroundConverter.cs",
+              "RelativeDocumentMoniker": "Converters\\FavoriteBackgroundConverter.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Converters\\FavoriteBackgroundConverter.cs",
+              "RelativeToolTip": "Converters\\FavoriteBackgroundConverter.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T10:16:27.927Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Model\\Repository.cs",
+              "RelativeDocumentMoniker": "Model\\Repository.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Model\\Repository.cs",
+              "RelativeToolTip": "Model\\Repository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T10:07:00.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AppShell.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\AppShell.xaml.cs",
+              "RelativeDocumentMoniker": "AppShell.xaml.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\AppShell.xaml.cs",
+              "RelativeToolTip": "AppShell.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:29:59.581Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ProfilePage.xaml",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\ProfilePage.xaml",
+              "RelativeDocumentMoniker": "Views\\ProfilePage.xaml",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\ProfilePage.xaml",
+              "RelativeToolTip": "Views\\ProfilePage.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-13T09:33:06.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Recipe.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Model\\Recipe.cs",
+              "RelativeDocumentMoniker": "Model\\Recipe.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Model\\Recipe.cs",
+              "RelativeToolTip": "Model\\Recipe.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:20:17.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "FavoritesPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\FavoritesPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\FavoritesPage.xaml.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\FavoritesPage.xaml.cs",
+              "RelativeToolTip": "Views\\FavoritesPage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:35:03.521Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ProfilePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\ProfilePage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\ProfilePage.xaml.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\Views\\ProfilePage.xaml.cs",
+              "RelativeToolTip": "Views\\ProfilePage.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:35:22.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "RecipeDetailViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\RecipeDetailViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\RecipeDetailViewModel.cs",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\ViewModels\\RecipeDetailViewModel.cs",
+              "RelativeToolTip": "ViewModels\\RecipeDetailViewModel.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAYwA4AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T09:42:15.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Users\\4a\\source\\repos\\RecipeShare\\AppShell.xaml",
+              "RelativeDocumentMoniker": "AppShell.xaml",
+              "ToolTip": "C:\\Users\\4a\\source\\repos\\RecipeShare\\AppShell.xaml",
+              "RelativeToolTip": "AppShell.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-13T09:14:40.562Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
