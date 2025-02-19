@@ -1061,3 +1061,11 @@ C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\resizetizer\r\draw
 C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\resizetizer\r\drawable-xhdpi\delete.png
 C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\resizetizer\r\drawable-xxhdpi\delete.png
 C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\resizetizer\r\drawable-xxxhdpi\delete.png
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\RecipeShare.sourcelink.json
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\android\assets\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\android\assets\Microsoft.EntityFrameworkCore.dll
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\android\assets\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\android\assets\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\android\assets\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\android\assets\MySqlConnector.dll
+C:\Users\4a\source\repos\RecipeShare\obj\Debug\net8.0-android\android\assets\Pomelo.EntityFrameworkCore.MySql.dll

@@ -1,0 +1,18 @@
+<ContentPage 
+    x:Class="RecipeShare.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:RecipeShare.ViewModels"
+    Title="Logowanie">
+
+  <ContentPage.BindingContext>
+    <vm:LoginViewModel />
+  </ContentPage.BindingContext>
+
+  <StackLayout Padding="20">
+    <Entry Placeholder="Email" Text="{Binding Email}" />
+    <Entry Placeholder="Hasło" IsPassword="True" Text="{Binding Password}" />
+    <Button Text="Zaloguj się" Command="{Binding LoginCommand}" />
+    <Label Text="{Binding Message}" TextColor="Red" />
+  </StackLayout>
+</ContentPage>

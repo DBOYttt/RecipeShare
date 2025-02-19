@@ -6,10 +6,9 @@ namespace RecipeShare
   public class Recipe : INotifyPropertyChanged
   {
     private bool isFavorite;
-
+    public int Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-
     public bool IsFavorite
     {
       get => isFavorite;
@@ -25,6 +24,6 @@ namespace RecipeShare
 
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+          PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
   }
 }

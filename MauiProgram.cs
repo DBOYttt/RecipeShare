@@ -1,13 +1,17 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RecipeShare.Services;
+using RecipeShare.Data;
 
-namespace RecipeShare
+namespace RecipeShare;
+
+public static class MauiProgram
 {
-  public static class MauiProgram
+  public static IServiceProvider Services { get; private set; }
+
+  public static MauiApp CreateMauiApp()
   {
-    public static MauiApp CreateMauiApp()
-    {
-      var builder = MauiApp.CreateBuilder();
-      builder
+    var builder = MauiApp.CreateBuilder();
+    builder
         .UseMauiApp<App>()
         .ConfigureFonts(fonts =>
         {
@@ -15,11 +19,12 @@ namespace RecipeShare
           fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         });
 
-#if DEBUG
-  		builder.Logging.AddDebug();
-#endif
+    // Rejestracja usług w DI
+    builder.Services.AddSingleton<UserSessionService>();
+    builder.Services.AddDbContext<AppDbContext>();
 
-      return builder.Build();
-    }
+    var app = builder.Build();
+    Services = app.Services;  // Zapisujemy referencję do DI
+    return app;
   }
 }
