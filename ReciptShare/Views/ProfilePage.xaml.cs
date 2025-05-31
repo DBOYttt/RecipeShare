@@ -1,20 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ReciptShare.ViewModels;
 
 namespace ReciptShare.Views;
 
 public partial class ProfilePage : ContentPage
 {
+    private ProfileViewModel _viewModel;
+
     public ProfilePage()
     {
         InitializeComponent();
+        _viewModel = new ProfileViewModel();
+        BindingContext = _viewModel;
     }
 
-    private async void OnEditProfileClicked(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        await Shell.Current.GoToAsync("editprofile");
+        base.OnAppearing();
+        // Refresh profile when page appears
+        _viewModel.RefreshProfileCommand.Execute(null);
     }
 }

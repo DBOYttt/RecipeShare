@@ -21,6 +21,9 @@
             <converters:CategoryToColorConverter x:Key="CategoryToColorConverter" />
             <converters:CategoryToTextColorConverter x:Key="CategoryToTextColorConverter" />
             <converters:IsNotAllCategoryConverter x:Key="IsNotAllCategoryConverter" />
+            <converters:TabToColorConverter x:Key="TabToColorConverter" />
+            <converters:TabToTextColorConverter x:Key="TabToTextColorConverter" />
+            <converters:StringEqualityConverter x:Key="StringEqualityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

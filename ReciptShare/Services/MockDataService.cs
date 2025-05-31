@@ -50,8 +50,8 @@ namespace ReciptShare.Services
                 {
                     Id = 1,
                     Username = "DBOYttt",
-                    Email = "dboy@example.com",
-                    FullName = "Daniel Boy",
+                    Email = "dboy@diboy.org",
+                    FullName = "Andrzej",
                     ProfileImageUrl = "https://api.dicebear.com/7.x/avataaars/png?seed=DBOYttt",
                     JoinDate = DateTime.Now.AddMonths(-6),
                     Bio = "Passionate home chef and recipe creator",
