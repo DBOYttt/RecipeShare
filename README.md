@@ -162,9 +162,9 @@ RecipeShare is a cross-platform social cooking application built with .NET MAUI,
 
 ### **Planned Backend Stack**
 - **API:** ASP.NET Core Web API
-- **Database:** SQL Server / SQLite
+- **Database:** PostgresSQL
 - **Authentication:** JWT tokens
-- **File Storage:** Azure Blob Storage / Local storage
+- **File Storage:** Local storage
 
 ---
 
