@@ -5,77 +5,180 @@
              xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
              x:DataType="viewmodels:BrowseViewModel"
              Title="{Binding Title}">
-    
-    <Grid RowDefinitions="Auto,Auto,*">
-        
-        <!-- Search Bar -->
-        <SearchBar Grid.Row="0"
-                   Placeholder="Search recipes..."
-                   Text="{Binding SearchText}"
-                   SearchCommand="{Binding SearchRecipesCommand}"
-                   BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#3D3D3D}"
-                   Margin="20,20,20,10" />
 
-        <!-- Category Filters -->
-        <StackLayout Grid.Row="1" Margin="20,0,20,10">
-            <Label Text="Categories" 
-                   FontSize="18" 
-                   FontAttributes="Bold" 
-                   Margin="0,0,0,10"
-                   TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
-            
-            <CollectionView ItemsSource="{Binding Categories}"
-                            HeightRequest="50">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="x:String">
-                        <Button Text="{Binding .}"
-                                BackgroundColor="{Binding ., Converter={StaticResource CategoryToColorConverter}}"
-                                TextColor="{Binding ., Converter={StaticResource CategoryToTextColorConverter}}"
-                                CornerRadius="20"
+    <RefreshView IsRefreshing="{Binding IsRefreshing}" 
+                 Command="{Binding RefreshRecipesCommand}">
+        <ScrollView>
+            <StackLayout Padding="20">
+                
+                <!-- Search Section -->
+                <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" 
+                       HasShadow="False" 
+                       CornerRadius="25" 
+                       Padding="0"
+                       Margin="0,0,0,20">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <Entry Grid.Column="0"
+                               Placeholder="Search recipes, ingredients, authors..."
+                               Text="{Binding SearchText}"
+                               FontSize="16"
+                               BackgroundColor="Transparent"
+                               Margin="20,0,10,0" />
+                        
+                        <Button Grid.Column="1"
+                                Text="❌"
+                                FontSize="16"
+                                BackgroundColor="Transparent"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Command="{Binding ClearSearchCommand}"
+                                IsVisible="{Binding SearchText, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                        
+                        <Button Grid.Column="2"
+                                Text="🔍"
+                                FontSize="16"
+                                BackgroundColor="Transparent"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Command="{Binding ApplyFiltersCommand}" />
+                    </Grid>
+                </Frame>
+
+                <!-- Filter Controls -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+                    <StackLayout Grid.Column="0">
+                        <Label Text="Categories" 
+                               FontSize="16" 
+                               FontAttributes="Bold" 
+                               Margin="0,0,0,10"
+                               TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                        
+                        <ScrollView Orientation="Horizontal" HeightRequest="50">
+                            <StackLayout Orientation="Horizontal" 
+                                         BindableLayout.ItemsSource="{Binding Categories}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Text="{Binding .}" 
+                                                BackgroundColor="{Binding ., Converter={StaticResource CategoryToColorConverter}, ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectedCategory}}"
+                                                TextColor="{Binding ., Converter={StaticResource CategoryToTextColorConverter}, ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectedCategory}}"
+                                                CornerRadius="20" 
+                                                Margin="5,0"
+                                                Padding="15,8"
+                                                FontSize="14"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ApplyFiltersCommand}"
+                                                CommandParameter="{Binding .}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </ScrollView>
+                    </StackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="📊 Sort"
+                            BackgroundColor="{AppThemeBinding Light=#E3F2FD, Dark=#1976D2}"
+                            TextColor="{AppThemeBinding Light=#1976D2, Dark=#FFFFFF}"
+                            CornerRadius="20"
+                            Padding="15,8"
+                            FontSize="14"
+                            VerticalOptions="End"
+                            Command="{Binding ShowFilterOptionsCommand}" />
+                </Grid>
+
+                <!-- Results Header -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,15">
+                    <Label Grid.Column="0"
+                           Text="{Binding FilteredRecipes.Count, StringFormat='Found {0} recipes'}" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                    
+                    <Label Grid.Column="1"
+                           Text="{Binding SortOption, StringFormat='Sorted by: {0}'}" 
+                           FontSize="14"
+                           VerticalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                </Grid>
+
+                <!-- Selected Category Display -->
+                <Frame BackgroundColor="{AppThemeBinding Light=#E8F5E8, Dark=#2E7D32}" 
+                       Margin="0,0,0,15"
+                       Padding="15,10"
+                       CornerRadius="8"
+                       IsVisible="{Binding SelectedCategory, Converter={StaticResource IsNotAllCategoryConverter}}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0"
+                               Text="{Binding SelectedCategory, StringFormat='Category: {0}'}" 
+                               FontSize="16"
+                               VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#2E7D32, Dark=#FFFFFF}" />
+                        <Button Grid.Column="1"
+                                Text="❌"
                                 FontSize="14"
-                                Padding="15,8"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.FilterByCategoryCommand}"
-                                CommandParameter="{Binding .}" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+                                BackgroundColor="Transparent"
+                                TextColor="{AppThemeBinding Light=#2E7D32, Dark=#FFFFFF}"
+                                WidthRequest="30"
+                                HeightRequest="30"
+                                Clicked="OnClearCategoryClicked" />
+                    </Grid>
+                </Frame>
 
-        <!-- Results -->
-        <StackLayout Grid.Row="2" Margin="20,0">
-            <Label Text="{Binding FilteredRecipes.Count, StringFormat='Found {0} recipes'}" 
-                   FontSize="16" 
-                   FontAttributes="Bold" 
-                   Margin="0,10,0,10"
-                   TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                <!-- Search Results Display -->
+                <Frame BackgroundColor="{AppThemeBinding Light=#FFF3E0, Dark=#E65100}" 
+                       Margin="0,0,0,15"
+                       Padding="15,10"
+                       CornerRadius="8"
+                       IsVisible="{Binding SearchText, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0"
+                               Text="{Binding SearchText, StringFormat='Searching for: &quot;{0}&quot;'}" 
+                               FontSize="16"
+                               VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light=#E65100, Dark=#FFFFFF}" />
+                        <Button Grid.Column="1"
+                                Text="❌"
+                                FontSize="14"
+                                BackgroundColor="Transparent"
+                                TextColor="{AppThemeBinding Light=#E65100, Dark=#FFFFFF}"
+                                WidthRequest="30"
+                                HeightRequest="30"
+                                Command="{Binding ClearSearchCommand}" />
+                    </Grid>
+                </Frame>
 
-            <!-- Recipe List -->
-            <CollectionView ItemsSource="{Binding FilteredRecipes}"
-                            ItemTemplate="{StaticResource RecipeCardTemplate}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.EmptyView>
-                    <ContentView>
-                        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="50">
-                            <Label Text="🔍" FontSize="60" HorizontalOptions="Center" />
-                            <Label Text="No recipes found" 
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   HorizontalOptions="Center"
-                                   TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
-                            <Label Text="Try adjusting your search criteria" 
-                                   FontSize="14"
-                                   HorizontalOptions="Center"
-                                   TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
-                        </StackLayout>
-                    </ContentView>
-                </CollectionView.EmptyView>
-            </CollectionView>
-        </StackLayout>
+                <!-- Recipe List -->
+                <CollectionView ItemsSource="{Binding FilteredRecipes}"
+                                ItemTemplate="{StaticResource RecipeCardTemplate}"
+                                ItemSizingStrategy="MeasureAllItems">
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout Padding="50" VerticalOptions="Center">
+                                <Label Text="🔍" 
+                                       FontSize="60" 
+                                       HorizontalOptions="Center"
+                                       Margin="0,0,0,20" />
+                                <Label Text="No recipes found" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                                <Label Text="Try adjusting your search terms or filters" 
+                                       FontSize="16"
+                                       HorizontalOptions="Center"
+                                       Margin="0,5,0,0"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                <Button Text="Clear All Filters"
+                                        BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                                        TextColor="White"
+                                        CornerRadius="25"
+                                        Margin="0,20,0,0"
+                                        Clicked="OnClearAllFiltersClicked" />
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
 
-    </Grid>
+            </StackLayout>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>

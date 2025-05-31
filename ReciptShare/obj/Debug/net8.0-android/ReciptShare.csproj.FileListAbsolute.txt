@@ -1049,3 +1049,4 @@
 /Users/andrzejnazim/RiderProjects/ReciptShare/ReciptShare/obj/Debug/net8.0-android/stamp/_GeneratePackageManagerJava.stamp
 /Users/andrzejnazim/RiderProjects/ReciptShare/ReciptShare/obj/Debug/net8.0-android/stamp/_ResolveLibraryProjectImports.stamp
 /Users/andrzejnazim/RiderProjects/ReciptShare/ReciptShare/obj/Debug/net8.0-android/android/assets/System.Private.CoreLib.dll
+/Users/andrzejnazim/RiderProjects/ReciptShare/ReciptShare/obj/Debug/net8.0-android/ReciptShare.sourcelink.json

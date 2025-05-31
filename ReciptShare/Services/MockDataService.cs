@@ -186,7 +186,7 @@ namespace ReciptShare.Services
                     },
                     Instructions = new List<string>
                     {
-                        "Preheat oven to 375°F",
+                        "Preheat oven to 180 C",
                         "Cream butter and sugars until light and fluffy",
                         "Beat in eggs and vanilla",
                         "Gradually blend in flour",
@@ -214,7 +214,7 @@ namespace ReciptShare.Services
                     RecipeId = 1,
                     UserId = 1,
                     UserName = "DBOYttt",
-                    UserAvatarUrl = "https://api.dicebear.com/7.x/avataaars/png?seed=DBOYttt",
+                    UserAvatarUrl = "https://api.dicebear.com/7.x/avataaars/png",
                     Content = "This recipe is absolutely perfect! Made it for dinner last night and everyone loved it.",
                     CreatedDate = DateTime.Now.AddHours(-12),
                     LikesCount = 8

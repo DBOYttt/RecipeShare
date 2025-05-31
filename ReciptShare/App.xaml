@@ -18,6 +18,9 @@
             <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <converters:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+            <converters:CategoryToColorConverter x:Key="CategoryToColorConverter" />
+            <converters:CategoryToTextColorConverter x:Key="CategoryToTextColorConverter" />
+            <converters:IsNotAllCategoryConverter x:Key="IsNotAllCategoryConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
