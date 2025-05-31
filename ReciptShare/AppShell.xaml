@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ReciptShare.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ReciptShare.Views"
+    Title="RecipeShare"
+    FlyoutBehavior="Disabled">
+
+    <!-- Define the tab bar structure -->
+    <TabBar>
+        <!-- Home Tab -->
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:HomePage}"
+            Route="home"
+            Icon="home_icon.png" />
+
+        <!-- Browse Tab -->
+        <ShellContent
+            Title="Browse"
+            ContentTemplate="{DataTemplate local:BrowsePage}"
+            Route="browse"
+            Icon="search_icon.png" />
+
+        <!-- Favorites Tab -->
+        <ShellContent
+            Title="Favorites"
+            ContentTemplate="{DataTemplate local:FavoritesPage}"
+            Route="favorites"
+            Icon="heart_icon.png" />
+
+        <!-- Shopping List Tab -->
+        <ShellContent
+            Title="Shopping"
+            ContentTemplate="{DataTemplate local:ShoppingListPage}"
+            Route="shopping"
+            Icon="cart_icon.png" />
+
+        <!-- Profile Tab -->
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate local:ProfilePage}"
+            Route="profile"
+            Icon="person_icon.png" />
+    </TabBar>
+
+    <!-- Register additional routes for navigation -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <!-- Tab bar styling -->
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#1F1F1F}" />
+                <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                <Setter Property="Shell.DisabledColor" Value="#B4B4B4" />
+                <Setter Property="Shell.UnselectedColor" Value="#95989A" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#1F1F1F}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95989A"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+</Shell>

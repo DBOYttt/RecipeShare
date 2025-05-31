@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ReciptShare.Views.ProfilePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Profile">
+    
+    <ScrollView>
+        <StackLayout Padding="20">
+            
+            <!-- Profile Header -->
+            <StackLayout HorizontalOptions="Center" Margin="0,20,0,30">
+                <!-- Profile Image -->
+                <Ellipse Fill="#E0E0E0" WidthRequest="100" HeightRequest="100" />
+                <Label Text="DBOYttt" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                <Label Text="Passionate home chef and recipe creator" 
+                       FontSize="16" 
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+            </StackLayout>
+
+            <!-- Stats -->
+            <Grid ColumnDefinitions="*,*,*" Margin="0,0,0,30">
+                <StackLayout Grid.Column="0" HorizontalOptions="Center">
+                    <Label Text="12" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="Recipes" FontSize="14" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Label Text="245" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="Followers" FontSize="14" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <Label Text="89" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="Following" FontSize="14" HorizontalOptions="Center" />
+                </StackLayout>
+            </Grid>
+
+            <!-- Action Buttons -->
+            <Button Text="Edit Profile"
+                    BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                    TextColor="White"
+                    CornerRadius="25"
+                    Margin="0,0,0,10"
+                    Clicked="OnEditProfileClicked" />
+
+            <Button Text="Settings"
+                    BackgroundColor="Transparent"
+                    TextColor="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}"
+                    BorderColor="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}"
+                    BorderWidth="1"
+                    CornerRadius="25" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

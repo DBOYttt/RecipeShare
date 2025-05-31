@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ReciptShare.Views.EditProfilePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Edit Profile">
+    
+    <StackLayout Padding="20" VerticalOptions="Center">
+        <Label Text="Edit Profile" 
+               FontSize="24" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center"
+               TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+        <Label Text="Profile editing form will be implemented here" 
+               FontSize="16" 
+               HorizontalOptions="Center"
+               TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+    </StackLayout>
+</ContentPage>

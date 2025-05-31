@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ReciptShare.Views.RecipeDetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
+             xmlns:models="clr-namespace:ReciptShare.Models"
+             x:DataType="viewmodels:ReciptDetailViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <StackLayout>
+            
+            <!-- Recipe Header Image -->
+            <Grid HeightRequest="250">
+                <Image Source="{Binding CurrentRecipe.ImageUrl}" 
+                       Aspect="AspectFill" />
+                <Frame BackgroundColor="#80000000" 
+                       Padding="0" 
+                       IsVisible="{Binding CurrentRecipe.ImageUrl, Converter={StaticResource IsStringNullOrEmptyConverter}}">
+                    <Label Text="🍽️" 
+                           FontSize="80" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                           TextColor="White" />
+                </Frame>
+                
+                <!-- Action Buttons Overlay -->
+                <StackLayout Orientation="Horizontal" 
+                             HorizontalOptions="End" 
+                             VerticalOptions="Start" 
+                             Margin="15">
+                    <Button Text="{Binding CurrentRecipe.IsFavorited, Converter={StaticResource BoolToHeartConverter}}"
+                            FontSize="24"
+                            BackgroundColor="#80000000"
+                            TextColor="White"
+                            CornerRadius="25"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            Command="{Binding ToggleFavoriteCommand}" />
+                    <Button Text="📤"
+                            FontSize="20"
+                            BackgroundColor="#80000000"
+                            TextColor="White"
+                            CornerRadius="25"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            Margin="10,0,0,0"
+                            Command="{Binding ShareRecipeCommand}" />
+                </StackLayout>
+            </Grid>
+
+            <StackLayout Padding="20">
+                
+                <!-- Recipe Title and Author -->
+                <Label Text="{Binding CurrentRecipe.Title}" 
+                       FontSize="28" 
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}"
+                       Margin="0,0,0,10" />
+
+                <StackLayout Orientation="Horizontal" Margin="0,0,0,15">
+                    <Label Text="{Binding CurrentRecipe.AuthorName, StringFormat='by {0}'}" 
+                           FontSize="16"
+                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                           VerticalOptions="Center" />
+                    <Button Text="View Profile"
+                            BackgroundColor="Transparent"
+                            TextColor="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}"
+                            FontSize="14"
+                            Padding="10,0"
+                            Command="{Binding ViewAuthorProfileCommand}" />
+                </StackLayout>
+
+                <!-- Recipe Stats -->
+                <Grid ColumnDefinitions="*,*,*,*" Margin="0,0,0,20">
+                    <Frame Grid.Column="0" BackgroundColor="{AppThemeBinding Light=#FFF3E0, Dark=#E65100}" Padding="10">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding CurrentRecipe.Rating, StringFormat='{0:F1}'}" 
+                                   FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="⭐ Rating" FontSize="10" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+                    <Frame Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#E8F5E8, Dark=#2E7D32}" Padding="10">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding CurrentRecipe.TotalTimeMinutes}" 
+                                   FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="⏱️ Minutes" FontSize="10" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+                    <Frame Grid.Column="2" BackgroundColor="{AppThemeBinding Light=#E3F2FD, Dark=#1976D2}" Padding="10">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding CurrentRecipe.Servings}" 
+                                   FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="🍽️ Servings" FontSize="10" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+                    <Frame Grid.Column="3" BackgroundColor="{AppThemeBinding Light=#F3E5F5, Dark=#7B1FA2}" Padding="10">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding CurrentRecipe.Difficulty}" 
+                                   FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="📊 Level" FontSize="10" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+
+                <!-- Description -->
+                <Label Text="Description" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       Margin="0,0,0,10"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                <Label Text="{Binding CurrentRecipe.Description}" 
+                       FontSize="16" 
+                       Margin="0,0,0,20"
+                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+
+                <!-- Ingredients Section -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+                    <Label Grid.Column="0"
+                           Text="Ingredients" 
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                    <Button Grid.Column="1"
+                            Text="+ Add All to Shopping List"
+                            BackgroundColor="{AppThemeBinding Light=#4CAF50, Dark=#388E3C}"
+                            TextColor="White"
+                            FontSize="12"
+                            CornerRadius="15"
+                            Padding="15,8"
+                            Command="{Binding AddAllIngredientsToShoppingListCommand}"
+                            IsEnabled="{Binding IsAddingToShoppingList, Converter={StaticResource InvertedBoolConverter}}" />
+                </Grid>
+
+                <CollectionView ItemsSource="{Binding CurrentRecipe.Ingredients}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Ingredient">
+                            <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" 
+                                   Margin="0,2" 
+                                   Padding="15,10"
+                                   CornerRadius="8">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Label Grid.Column="0" 
+                                           Text="•" 
+                                           FontSize="16" 
+                                           VerticalOptions="Center"
+                                           TextColor="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}" />
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding DisplayText}" 
+                                           FontSize="16" 
+                                           VerticalOptions="Center"
+                                           Margin="10,0,0,0"
+                                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                                    <CheckBox Grid.Column="2" 
+                                              IsChecked="{Binding IsSelected}"
+                                              Color="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Instructions Section -->
+                <Label Text="Instructions" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       Margin="0,20,0,10"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                <CollectionView ItemsSource="{Binding InstructionsWithNumbers}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:NumberedInstruction">
+                            <Frame BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#2D2D30}" 
+                                   HasShadow="True"
+                                   Margin="0,5" 
+                                   Padding="15"
+                                   CornerRadius="10">
+                                <Grid ColumnDefinitions="30,*">
+                                    <Label Grid.Column="0" 
+                                           Text="{Binding Number}" 
+                                           FontSize="16" 
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Start"
+                                           TextColor="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}" />
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding Instruction}" 
+                                           FontSize="16" 
+                                           VerticalOptions="Center"
+                                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+          
+
+                <!-- Comments Section -->
+                <Label Text="Comments" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       Margin="0,30,0,10"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                <!-- Add Comment -->
+                <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" 
+                       Margin="0,0,0,15"
+                       Padding="15"
+                       CornerRadius="10">
+                    <StackLayout>
+                        <Entry Placeholder="Write a comment..." 
+                               Text="{Binding NewCommentText}"
+                               FontSize="16"
+                               BackgroundColor="Transparent" />
+                        <Button Text="Post Comment"
+                                BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                                TextColor="White"
+                                CornerRadius="20"
+                                Margin="0,10,0,0"
+                                Command="{Binding AddCommentCommand}"
+                                IsEnabled="{Binding NewCommentText, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Comments List -->
+                <CollectionView ItemsSource="{Binding Comments}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Comment">
+                            <Frame BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#2D2D30}" 
+                                   HasShadow="True"
+                                   Margin="0,5" 
+                                   Padding="15"
+                                   CornerRadius="10">
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="50,*,Auto">
+                                    <!-- User Avatar -->
+                                    <Ellipse Grid.RowSpan="3" 
+                                             Fill="#E0E0E0" 
+                                             WidthRequest="40" 
+                                             HeightRequest="40"
+                                             Margin="0,0,10,0" />
+                                    
+                                    <!-- User Name -->
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding UserName}" 
+                                           FontSize="14" 
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                                    
+                                    <!-- Comment Date -->
+                                    <Label Grid.Column="1" Grid.Row="1"
+                                           Text="{Binding CreatedDate, StringFormat='{0:MMM dd, yyyy}'}" 
+                                           FontSize="12"
+                                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                    
+                                    <!-- Comment Content -->
+                                    <Label Grid.Column="1" Grid.Row="2"
+                                           Text="{Binding Content}" 
+                                           FontSize="16"
+                                           Margin="0,5,0,0"
+                                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                                    
+                                    <!-- Like Button -->
+                                    <StackLayout Grid.Column="2" Grid.RowSpan="3" 
+                                                 VerticalOptions="Center">
+                                        <Button Text="{Binding IsLiked, Converter={StaticResource BoolToHeartConverter}}"
+                                                FontSize="16"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.LikeCommentCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        <Label Text="{Binding LikesCount}" 
+                                               FontSize="12" 
+                                               HorizontalOptions="Center"
+                                               TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <Label Text="No comments yet. Be the first to comment!" 
+                                   HorizontalOptions="Center" 
+                                   VerticalOptions="Center"
+                                   FontSize="16"
+                                   Margin="0,20"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+
+                <!-- Add Rating Section -->
+                <Label Text="Rate this Recipe" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       Margin="0,30,0,10"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" 
+                       Margin="0,0,0,20"
+                       Padding="15"
+                       CornerRadius="10">
+                    <StackLayout>
+                        <!-- Star Rating -->
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Button Text="⭐" FontSize="30" BackgroundColor="Transparent" Clicked="OnStarClicked" ClassId="1" />
+                            <Button Text="⭐" FontSize="30" BackgroundColor="Transparent" Clicked="OnStarClicked" ClassId="2" />
+                            <Button Text="⭐" FontSize="30" BackgroundColor="Transparent" Clicked="OnStarClicked" ClassId="3" />
+                            <Button Text="⭐" FontSize="30" BackgroundColor="Transparent" Clicked="OnStarClicked" ClassId="4" />
+                            <Button Text="⭐" FontSize="30" BackgroundColor="Transparent" Clicked="OnStarClicked" ClassId="5" />
+                        </StackLayout>
+                        
+                        <Label Text="{Binding UserRating, StringFormat='Rating: {0}/5'}" 
+                               HorizontalOptions="Center" 
+                               FontSize="16"
+                               TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                        
+                        <Entry Placeholder="Write a review (optional)..." 
+                               Text="{Binding UserReview}"
+                               FontSize="16"
+                               Margin="0,10,0,0" />
+                        
+                        <Button Text="Submit Rating"
+                                BackgroundColor="{AppThemeBinding Light=#FF9800, Dark=#F57C00}"
+                                TextColor="White"
+                                CornerRadius="20"
+                                Margin="0,10,0,0"
+                                Command="{Binding AddRatingCommand}"
+                                IsEnabled="{Binding UserRating, Converter={StaticResource IntToBoolConverter}}" />
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

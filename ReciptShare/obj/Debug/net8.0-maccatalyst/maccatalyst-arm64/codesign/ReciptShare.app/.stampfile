@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - --entitlements /Users/andrzejnazim/RiderProjects/ReciptShare/ReciptShare/obj/Debug/net8.0-maccatalyst/maccatalyst-arm64/Entitlements.xcent /Users/andrzejnazim/RiderProjects/ReciptShare/ReciptShare/bin/Debug/net8.0-maccatalyst/maccatalyst-arm64/ReciptShare.app
