@@ -1,15 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ReciptShare.ViewModels;
 
 namespace ReciptShare.Views;
 
 public partial class ShoppingListPage : ContentPage
 {
+    private ShoppingListViewModel _viewModel;
+
     public ShoppingListPage()
     {
         InitializeComponent();
+        _viewModel = new ShoppingListViewModel();
+        BindingContext = _viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // Refresh shopping list when page appears
+        _viewModel.LoadShoppingList();
     }
 }

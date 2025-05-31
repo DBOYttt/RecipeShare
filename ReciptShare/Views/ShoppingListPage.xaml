@@ -2,18 +2,244 @@
 <ContentPage x:Class="ReciptShare.Views.ShoppingListPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="Shopping List">
-    
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Label Text="🛒" FontSize="60" HorizontalOptions="Center" />
-        <Label Text="Shopping List" 
-               FontSize="24" 
-               FontAttributes="Bold" 
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
-        <Label Text="Add ingredients from recipes to create your shopping list" 
-               FontSize="16" 
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
-    </StackLayout>
+             xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
+             xmlns:models="clr-namespace:ReciptShare.Models"
+             x:DataType="viewmodels:ShoppingListViewModel"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Share" 
+                     Command="{Binding ShareShoppingListCommand}"
+                     IconImageSource="share_icon.png" />
+        <ToolbarItem Text="Clear All" 
+                     Command="{Binding ClearAllItemsCommand}"
+                     IconImageSource="delete_icon.png" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <StackLayout Padding="20">
+            
+            <!-- Header Section -->
+            <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" 
+                   HasShadow="True" 
+                   CornerRadius="15" 
+                   Margin="0,0,0,20"
+                   Padding="20">
+                <StackLayout>
+                    <Label Text="🛒" 
+                           FontSize="40" 
+                           HorizontalOptions="Center" />
+                    <Label Text="Shopping List" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                    <Label Text="{Binding ShoppingItems.Count, StringFormat='{0} items to buy'}" 
+                           FontSize="16" 
+                           HorizontalOptions="Center"
+                           Margin="0,5,0,0"
+                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Add New Item Section -->
+            <Frame BackgroundColor="{AppThemeBinding Light=#E8F5E8, Dark=#2E7D32}" 
+                   CornerRadius="15" 
+                   Margin="0,0,0,20"
+                   Padding="20">
+                <StackLayout>
+                    <Label Text="Add New Item" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#2E7D32, Dark=#FFFFFF}"
+                           Margin="0,0,0,15" />
+                    
+                    <Entry Placeholder="Item name (e.g., Milk, Bread, Tomatoes)"
+                           Text="{Binding NewItemName}"
+                           FontSize="16"
+                           Margin="0,0,0,10" />
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,0,0,15">
+                        <Entry Grid.Column="0"
+                               Placeholder="Quantity"
+                               Text="{Binding NewItemQuantity}"
+                               Keyboard="Numeric"
+                               FontSize="16" />
+                        
+                        <Picker Grid.Column="1"
+                                ItemsSource="{Binding CommonUnits}"
+                                SelectedItem="{Binding NewItemUnit}"
+                                FontSize="16" />
+                    </Grid>
+                    
+                    <Button Text="+ Add to List"
+                            BackgroundColor="{AppThemeBinding Light=#4CAF50, Dark=#388E3C}"
+                            TextColor="White"
+                            CornerRadius="25"
+                            Command="{Binding AddNewItemCommand}"
+                            IsEnabled="{Binding IsAddingItem, Converter={StaticResource InvertedBoolConverter}}" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Shopping Items Section -->
+            <Label Text="To Buy" 
+                   FontSize="20" 
+                   FontAttributes="Bold" 
+                   Margin="0,0,0,15"
+                   TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}"
+                   IsVisible="{Binding ShoppingItems.Count, Converter={StaticResource IntToBoolConverter}}" />
+
+            <CollectionView ItemsSource="{Binding ShoppingItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Ingredient">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Remove"
+                                               BackgroundColor="#FF4444"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#2D2D30}" 
+                                   HasShadow="True" 
+                                   CornerRadius="10" 
+                                   Margin="0,5"
+                                   Padding="15">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Button Grid.Column="0" 
+                                            Text="☐"
+                                            FontSize="20"
+                                            BackgroundColor="Transparent"
+                                            TextColor="{AppThemeBinding Light=#4CAF50, Dark=#388E3C}"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleItemCompletionCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding DisplayText}" 
+                                           FontSize="16" 
+                                           VerticalOptions="Center"
+                                           Margin="15,0,0,0"
+                                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                                    
+                                    <Button Grid.Column="2"
+                                            Text="❌"
+                                            FontSize="16"
+                                            BackgroundColor="Transparent"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Completed Items Section -->
+            <Grid ColumnDefinitions="*,Auto" 
+                  Margin="0,30,0,15"
+                  IsVisible="{Binding CompletedItems.Count, Converter={StaticResource IntToBoolConverter}}">
+                <Label Grid.Column="0"
+                       Text="{Binding CompletedItems.Count, StringFormat='Completed ({0})'}" 
+                       FontSize="20" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                
+                <Button Grid.Column="1"
+                        Text="Clear Completed"
+                        BackgroundColor="{AppThemeBinding Light=#FF9800, Dark=#F57C00}"
+                        TextColor="White"
+                        CornerRadius="20"
+                        Padding="15,8"
+                        FontSize="14"
+                        Command="{Binding ClearCompletedItemsCommand}" />
+            </Grid>
+
+            <CollectionView ItemsSource="{Binding CompletedItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Ingredient">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Remove"
+                                               BackgroundColor="#FF4444"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#404040}" 
+                                   HasShadow="False" 
+                                   CornerRadius="10" 
+                                   Margin="0,5"
+                                   Padding="15">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Button Grid.Column="0" 
+                                            Text="☑️"
+                                            FontSize="20"
+                                            BackgroundColor="Transparent"
+                                            TextColor="{AppThemeBinding Light=#4CAF50, Dark=#388E3C}"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleItemCompletionCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding DisplayText}" 
+                                           FontSize="16" 
+                                           VerticalOptions="Center"
+                                           Margin="15,0,0,0"
+                                           TextDecorations="Strikethrough"
+                                           TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                                    
+                                    <Button Grid.Column="2"
+                                            Text="❌"
+                                            FontSize="16"
+                                            BackgroundColor="Transparent"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Empty State -->
+            <StackLayout Padding="50" 
+                         VerticalOptions="Center"
+                         IsVisible="{Binding ShoppingItems.Count, Converter={StaticResource IntToBoolConverter}, ConverterParameter=invert}">
+                <Label Text="📋" 
+                       FontSize="80" 
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,20" />
+                <Label Text="Your Shopping List is Empty" 
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+                <Label Text="Add ingredients from recipes or create custom items using the form above!" 
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,10,0,30"
+                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                <Button Text="Browse Recipes"
+                        BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                        TextColor="White"
+                        CornerRadius="25"
+                        Padding="30,15"
+                        Command="{Binding BrowseRecipesCommand}" />
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
