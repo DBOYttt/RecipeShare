@@ -24,6 +24,16 @@
             <converters:TabToColorConverter x:Key="TabToColorConverter" />
             <converters:TabToTextColorConverter x:Key="TabToTextColorConverter" />
             <converters:StringEqualityConverter x:Key="StringEqualityConverter" />
+            
+            <!-- Add Recipe Converters -->
+            <converters:StepToProgressConverter x:Key="StepToProgressConverter" />
+            <converters:StepToColorConverter x:Key="StepToColorConverter" />
+            <converters:StepToTextColorConverter x:Key="StepToTextColorConverter" />
+            <converters:CategorySelectedConverter x:Key="CategorySelectedConverter" />
+            <converters:CategorySelectedTextConverter x:Key="CategorySelectedTextConverter" />
+            <converters:IsNotFirstStepConverter x:Key="IsNotFirstStepConverter" />
+            <converters:IsFirstStepConverter x:Key="IsFirstStepConverter" />
+            <converters:IsNotLastStepConverter x:Key="IsNotLastStepConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

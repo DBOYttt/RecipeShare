@@ -1,4 +1,6 @@
-﻿namespace ReciptShare;
+﻿using ReciptShare.Views;
+
+namespace ReciptShare;
 
 public partial class AppShell : Shell
 {
@@ -6,9 +8,9 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
         
-        // Register routes for navigation
-        Routing.RegisterRoute("recipedetail", typeof(Views.RecipeDetailPage));
-        Routing.RegisterRoute("addrecipe", typeof(Views.AddRecipePage));
-        Routing.RegisterRoute("editprofile", typeof(Views.EditProfilePage));
+        // Register additional routes
+        Routing.RegisterRoute("recipedetail", typeof(RecipeDetailPage));
+        Routing.RegisterRoute("addrecipe", typeof(AddRecipePage));
+        Routing.RegisterRoute("editprofile", typeof(AddRecipePage)); // Placeholder - you can create EditProfilePage later
     }
 }

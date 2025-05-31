@@ -2,17 +2,507 @@
 <ContentPage x:Class="ReciptShare.Views.AddRecipePage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="Add Recipe">
-    
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Label Text="Add New Recipe" 
-               FontSize="24" 
-               FontAttributes="Bold" 
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
-        <Label Text="Recipe creation form will be implemented here" 
-               FontSize="16" 
-               HorizontalOptions="Center"
-               TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
-    </StackLayout>
+             xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
+             xmlns:models="clr-namespace:ReciptShare.Models"
+             x:DataType="viewmodels:AddRecipeViewModel"
+             Title="{Binding Title}"
+             Shell.BackButtonBehavior="{x:Null}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Preview" 
+                     Command="{Binding PreviewRecipeCommand}"
+                     IconImageSource="preview_icon.png" />
+        <ToolbarItem Text="Clear" 
+                     Command="{Binding ClearFormCommand}"
+                     IconImageSource="clear_icon.png" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        
+        <!-- Progress Indicator -->
+        <Frame Grid.Row="0" BackgroundColor="{AppThemeBinding Light=#E3F2FD, Dark=#1976D2}" Padding="20,15" Margin="0" CornerRadius="0,0,20,20">
+            <StackLayout>
+                <Label Text="{Binding CurrentStep, StringFormat='Step: {0}'}" 
+                       FontSize="18" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=#1976D2, Dark=#FFFFFF}" />
+                
+                <ProgressBar Progress="{Binding CurrentStep, Converter={StaticResource StepToProgressConverter}}" 
+                             ProgressColor="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}"
+                             BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#333333}"
+                             HeightRequest="8"
+                             Margin="0,10,0,0" />
+                
+                <ScrollView Orientation="Horizontal" Margin="0,10,0,0">
+                    <StackLayout Orientation="Horizontal" 
+                                 BindableLayout.ItemsSource="{Binding FormSteps}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Button Text="{Binding .}" 
+                                        BackgroundColor="{Binding ., Converter={StaticResource StepToColorConverter}, ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CurrentStep}}"
+                                        TextColor="{Binding ., Converter={StaticResource StepToTextColorConverter}, ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CurrentStep}}"
+                                        CornerRadius="15" 
+                                        Margin="5,0"
+                                        Padding="15,8"
+                                        FontSize="12"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GoToStepCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </Frame>
+
+        <!-- Content Area -->
+        <ScrollView Grid.Row="1" Padding="20">
+            <StackLayout>
+                
+                <!-- Basic Info Step -->
+                <StackLayout IsVisible="{Binding CurrentStep, Converter={StaticResource StringEqualityConverter}, ConverterParameter='Basic Info'}">
+                    <Label Text="📝 Basic Recipe Information" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,20"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                    <Label Text="Recipe Title *" FontSize="16" FontAttributes="Bold" Margin="0,0,0,5" />
+                    <Entry Placeholder="Enter a catchy recipe title..."
+                           Text="{Binding RecipeTitle}"
+                           FontSize="16"
+                           Margin="0,0,0,15" />
+
+                    <Label Text="Description *" FontSize="16" FontAttributes="Bold" Margin="0,0,0,5" />
+                    <Editor Placeholder="Describe your recipe, what makes it special..."
+                            Text="{Binding RecipeDescription}"
+                            FontSize="16"
+                            HeightRequest="100"
+                            Margin="0,0,0,15" />
+
+                    <Label Text="Recipe Image URL (Optional)" FontSize="16" FontAttributes="Bold" Margin="0,0,0,5" />
+                    <Entry Placeholder="https://example.com/image.jpg"
+                           Text="{Binding ImageUrl}"
+                           Keyboard="Url"
+                           FontSize="16"
+                           Margin="0,0,0,15" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15" Margin="0,0,0,15">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Prep Time (min) *" FontSize="16" FontAttributes="Bold" Margin="0,0,0,5" />
+                            <Entry Text="{Binding PrepTimeMinutes}" Keyboard="Numeric" />
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Cook Time (min) *" FontSize="16" FontAttributes="Bold" Margin="0,0,0,5" />
+                            <Entry Text="{Binding CookTimeMinutes}" Keyboard="Numeric" />
+                        </StackLayout>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15" Margin="0,0,0,20">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Servings *" FontSize="16" FontAttributes="Bold" Margin="0,0,0,5" />
+                            <Entry Text="{Binding Servings}" Keyboard="Numeric" />
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Difficulty *" FontSize="16" FontAttributes="Bold" Margin="0,0,0,5" />
+                            <Picker ItemsSource="{Binding DifficultyLevels}" SelectedItem="{Binding Difficulty}" />
+                        </StackLayout>
+                    </Grid>
+
+                    <Frame BackgroundColor="{AppThemeBinding Light=#E8F5E8, Dark=#2E7D32}" Padding="15" CornerRadius="10">
+                        <StackLayout>
+                            <Label Text="📊 Recipe Summary" FontSize="16" FontAttributes="Bold" />
+                            <Label Text="{Binding TotalTimeMinutes, StringFormat='Total Time: {0} minutes'}" />
+                            <Label Text="{Binding Servings, StringFormat='Serves: {0} people'}" />
+                            <Label Text="{Binding Difficulty, StringFormat='Difficulty: {0}'}" />
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+
+                <!-- Ingredients Step -->
+                <StackLayout IsVisible="{Binding CurrentStep, Converter={StaticResource StringEqualityConverter}, ConverterParameter='Ingredients'}">
+                    <Label Text="🥕 Recipe Ingredients" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,20"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                    <!-- Add Ingredient Form -->
+                    <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" Padding="15" CornerRadius="10" Margin="0,0,0,20">
+                        <StackLayout>
+                            <Label Text="Add New Ingredient" FontSize="16" FontAttributes="Bold" Margin="0,0,0,10" />
+                            
+                            <Entry Placeholder="Ingredient name (e.g., Chicken breast, Olive oil)"
+                                   Text="{Binding NewIngredientName}"
+                                   FontSize="16"
+                                   Margin="0,0,0,10" />
+                            
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,0,0,15">
+                                <Entry Grid.Column="0"
+                                       Placeholder="Quantity"
+                                       Text="{Binding NewIngredientQuantity}"
+                                       Keyboard="Numeric" />
+                                <Picker Grid.Column="1"
+                                        ItemsSource="{Binding CommonUnits}"
+                                        SelectedItem="{Binding NewIngredientUnit}" />
+                            </Grid>
+                            
+                            <Button Text="+ Add Ingredient"
+                                    BackgroundColor="{AppThemeBinding Light=#4CAF50, Dark=#388E3C}"
+                                    TextColor="White"
+                                    CornerRadius="20"
+                                    Command="{Binding AddIngredientCommand}" />
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Ingredients List -->
+                    <Label Text="{Binding Ingredients.Count, StringFormat='Ingredients Added ({0})'}" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,10" />
+
+                    <CollectionView ItemsSource="{Binding Ingredients}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Ingredient">
+                                <Frame BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#333333}" 
+                                       HasShadow="True" 
+                                       CornerRadius="10" 
+                                       Margin="0,5"
+                                       Padding="15">
+                                    <Grid ColumnDefinitions="*,Auto,Auto">
+                                        <Label Grid.Column="0" 
+                                               Text="{Binding DisplayText}" 
+                                               FontSize="16" 
+                                               VerticalOptions="Center" />
+                                        
+                                        <Button Grid.Column="1"
+                                                Text="✏️"
+                                                FontSize="16"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditIngredientCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        
+                                        <Button Grid.Column="2"
+                                                Text="❌"
+                                                FontSize="16"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveIngredientCommand}"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        
+                        <CollectionView.EmptyView>
+                            <ContentView>
+                                <StackLayout Padding="30" VerticalOptions="Center">
+                                    <Label Text="🥕" FontSize="60" HorizontalOptions="Center" />
+                                    <Label Text="No ingredients added yet" 
+                                           FontSize="18" 
+                                           HorizontalOptions="Center"
+                                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                    <Label Text="Use the form above to add your ingredients" 
+                                           FontSize="14" 
+                                           HorizontalOptions="Center"
+                                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                </StackLayout>
+                            </ContentView>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </StackLayout>
+
+                <!-- Instructions Step -->
+                <StackLayout IsVisible="{Binding CurrentStep, Converter={StaticResource StringEqualityConverter}, ConverterParameter='Instructions'}">
+                    <Label Text="📋 Cooking Instructions" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,20"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                    <!-- Add Instruction Form -->
+                    <Frame BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" Padding="15" CornerRadius="10" Margin="0,0,0,20">
+                        <StackLayout>
+                            <Label Text="{Binding Instructions.Count, StringFormat='Step {0}'}" FontSize="16" FontAttributes="Bold" Margin="0,0,0,10" />
+                            
+                            <Editor Placeholder="Enter the next cooking step in detail..."
+                                    Text="{Binding NewInstruction}"
+                                    FontSize="16"
+                                    HeightRequest="80"
+                                    Margin="0,0,0,15" />
+                            
+                            <Button Text="+ Add Step"
+                                    BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                                    TextColor="White"
+                                    CornerRadius="20"
+                                    Command="{Binding AddInstructionCommand}" />
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Instructions List -->
+                    <Label Text="{Binding Instructions.Count, StringFormat='Instructions ({0} steps)'}" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,10" />
+
+                    <CollectionView ItemsSource="{Binding Instructions}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Frame BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#333333}" 
+                                       HasShadow="True" 
+                                       CornerRadius="10" 
+                                       Margin="0,5"
+                                       Padding="15">
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto">
+                                        <Label Grid.Column="0" 
+                                               Text="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=ItemsSource, Converter={StaticResource ListIndexConverter}, ConverterParameter={Binding .}}"
+                                               FontSize="16" 
+                                               FontAttributes="Bold"
+                                               VerticalOptions="Start"
+                                               TextColor="{AppThemeBinding Light=#2196F3, Dark=#64B5F6}"
+                                               WidthRequest="30" />
+                                        
+                                        <Label Grid.Column="1" 
+                                               Text="{Binding .}" 
+                                               FontSize="14" 
+                                               VerticalOptions="Center"
+                                               Margin="10,0,10,0" />
+                                        
+                                        <Button Grid.Column="2"
+                                                Text="⬆️"
+                                                FontSize="14"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="35"
+                                                HeightRequest="35"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.MoveInstructionUpCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        
+                                        <Button Grid.Column="3"
+                                                Text="⬇️"
+                                                FontSize="14"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="35"
+                                                HeightRequest="35"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.MoveInstructionDownCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        
+                                        <Button Grid.Column="4"
+                                                Text="✏️"
+                                                FontSize="14"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="35"
+                                                HeightRequest="35"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditInstructionCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        
+                                        <Button Grid.Column="5"
+                                                Text="❌"
+                                                FontSize="14"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="35"
+                                                HeightRequest="35"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveInstructionCommand}"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        
+                        <CollectionView.EmptyView>
+                            <ContentView>
+                                <StackLayout Padding="30" VerticalOptions="Center">
+                                    <Label Text="📋" FontSize="60" HorizontalOptions="Center" />
+                                    <Label Text="No instructions added yet" 
+                                           FontSize="18" 
+                                           HorizontalOptions="Center"
+                                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                    <Label Text="Add step-by-step cooking instructions" 
+                                           FontSize="14" 
+                                           HorizontalOptions="Center"
+                                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                </StackLayout>
+                            </ContentView>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </StackLayout>
+
+                <!-- Categories Step -->
+                <StackLayout IsVisible="{Binding CurrentStep, Converter={StaticResource StringEqualityConverter}, ConverterParameter='Categories'}">
+                    <Label Text="🏷️ Recipe Categories" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,20"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                    <Label Text="Select categories that best describe your recipe:" 
+                           FontSize="16" 
+                           Margin="0,0,0,15"
+                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+
+                    <Label Text="{Binding SelectedCategories.Count, StringFormat='Selected Categories ({0})'}" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,15" />
+
+                    <CollectionView ItemsSource="{Binding Categories}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2" />
+                        </CollectionView.ItemsLayout>
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Frame BackgroundColor="{Binding ., Converter={StaticResource CategorySelectedConverter}, ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectedCategories}}" 
+                                       HasShadow="True" 
+                                       CornerRadius="20" 
+                                       Margin="5"
+                                       Padding="15,10">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleCategoryCommand}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                    
+                                    <Label Text="{Binding .}" 
+                                           FontSize="14" 
+                                           HorizontalOptions="Center"
+                                           TextColor="{Binding ., Converter={StaticResource CategorySelectedTextConverter}, ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectedCategories}}" />
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+
+                <!-- Final Review Step -->
+                <StackLayout IsVisible="{Binding CurrentStep, Converter={StaticResource StringEqualityConverter}, ConverterParameter='Final Review'}">
+                    <Label Text="✅ Final Review" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           Margin="0,0,0,20"
+                           TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}" />
+
+                    <Label Text="Review your recipe before publishing:" 
+                           FontSize="16" 
+                           Margin="0,0,0,20"
+                           TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+
+                    <!-- Recipe Summary Card -->
+                    <Frame BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#2D2D30}" 
+                           HasShadow="True" 
+                           CornerRadius="15" 
+                           Padding="20"
+                           Margin="0,0,0,20">
+                        <StackLayout>
+                            <Label Text="{Binding RecipeTitle}" 
+                                   FontSize="20" 
+                                   FontAttributes="Bold" 
+                                   Margin="0,0,0,10" />
+                            
+                            <Label Text="{Binding RecipeDescription}" 
+                                   FontSize="14" 
+                                   Margin="0,0,0,15"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                            
+                            <Grid ColumnDefinitions="*,*,*" Margin="0,0,0,15">
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="{Binding TotalTimeMinutes}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                    <Label Text="Total Minutes" FontSize="12" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                </StackLayout>
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding Servings}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                    <Label Text="Servings" FontSize="12" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                </StackLayout>
+                                <StackLayout Grid.Column="2">
+                                    <Label Text="{Binding Difficulty}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                                    <Label Text="Difficulty" FontSize="12" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}" />
+                                </StackLayout>
+                            </Grid>
+                            
+                            <Label Text="{Binding Ingredients.Count, StringFormat='✓ {0} Ingredients'}" FontSize="14" />
+                            <Label Text="{Binding Instructions.Count, StringFormat='✓ {0} Instructions'}" FontSize="14" />
+                            <Label Text="{Binding SelectedCategories.Count, StringFormat='✓ {0} Categories'}" FontSize="14" />
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Action Buttons -->
+                    <StackLayout Spacing="15">
+                        <Button Text="📖 Preview Recipe"
+                                BackgroundColor="{AppThemeBinding Light=#FF9800, Dark=#F57C00}"
+                                TextColor="White"
+                                CornerRadius="25"
+                                HeightRequest="50"
+                                Command="{Binding PreviewRecipeCommand}" />
+                        
+                        <Button Text="💾 Save as Draft"
+                                BackgroundColor="{AppThemeBinding Light=#9C27B0, Dark=#7B1FA2}"
+                                TextColor="White"
+                                CornerRadius="25"
+                                HeightRequest="50"
+                                Command="{Binding SaveAsDraftCommand}" />
+                    </StackLayout>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Navigation Buttons -->
+        <Frame Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#2D2D30}" Padding="20,15" Margin="0" CornerRadius="20,20,0,0">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <!-- Previous Button -->
+                <Button Grid.Column="0"
+                        Text="⬅️ Previous"
+                        BackgroundColor="{AppThemeBinding Light=#9E9E9E, Dark=#616161}"
+                        TextColor="White"
+                        CornerRadius="25"
+                        Padding="20,12"
+                        Command="{Binding PreviousStepCommand}"
+                        IsVisible="{Binding CurrentStep, Converter={StaticResource IsNotFirstStepConverter}}" />
+
+                <!-- Back Button (for first step) -->
+                <Button Grid.Column="0"
+                        Text="⬅️ Back"
+                        BackgroundColor="{AppThemeBinding Light=#9E9E9E, Dark=#616161}"
+                        TextColor="White"
+                        CornerRadius="25"
+                        Padding="20,12"
+                        Command="{Binding GoBackCommand}"
+                        IsVisible="{Binding CurrentStep, Converter={StaticResource IsFirstStepConverter}}" />
+
+                <!-- Save Recipe Button (Final Step) -->
+                <Button Grid.Column="2"
+                        Text="🚀 Publish Recipe"
+                        BackgroundColor="{AppThemeBinding Light=#4CAF50, Dark=#388E3C}"
+                        TextColor="White"
+                        CornerRadius="25"
+                        Padding="20,12"
+                        Command="{Binding SaveRecipeCommand}"
+                        IsEnabled="{Binding IsSaving, Converter={StaticResource InvertedBoolConverter}}"
+                        IsVisible="{Binding CurrentStep, Converter={StaticResource StringEqualityConverter}, ConverterParameter='Final Review'}" />
+
+                <!-- Next Button -->
+                <Button Grid.Column="2"
+                        Text="Next ➡️"
+                        BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                        TextColor="White"
+                        CornerRadius="25"
+                        Padding="20,12"
+                        Command="{Binding NextStepCommand}"
+                        IsVisible="{Binding CurrentStep, Converter={StaticResource IsNotLastStepConverter}}" />
+            </Grid>
+        </Frame>
+
+        <!-- Loading Overlay -->
+        <Frame Grid.RowSpan="3" 
+               BackgroundColor="#80000000" 
+               IsVisible="{Binding IsSaving}"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <ActivityIndicator IsRunning="True" Color="White" WidthRequest="50" HeightRequest="50" />
+                <Label Text="Publishing your recipe..." FontSize="18" TextColor="White" HorizontalOptions="Center" Margin="0,20,0,0" />
+            </StackLayout>
+        </Frame>
+
+    </Grid>
 </ContentPage>
