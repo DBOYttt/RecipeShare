@@ -7,6 +7,9 @@ RecipeShare is a cross-platform social cooking application built with .NET MAUI,
 **Last Updated:** 2025-05-31 14:59:50 UTC  
 **Developer:** DBOYttt
 
+<img width="390" alt="image" src="https://github.com/user-attachments/assets/e1313518-afc8-49a0-a238-e4246e608f89" />
+
+
 ---
 
 ## 🎯 Project Completion Status
