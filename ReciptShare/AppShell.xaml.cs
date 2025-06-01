@@ -11,6 +11,6 @@ public partial class AppShell : Shell
         // Register additional routes
         Routing.RegisterRoute("recipedetail", typeof(RecipeDetailPage));
         Routing.RegisterRoute("addrecipe", typeof(AddRecipePage));
-        Routing.RegisterRoute("editprofile", typeof(AddRecipePage)); // Placeholder - you can create EditProfilePage later
+        Routing.RegisterRoute("editprofile", typeof(EditProfilePage));
     }
 }

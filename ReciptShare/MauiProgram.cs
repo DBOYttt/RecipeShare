@@ -29,6 +29,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ProfileViewModel>();
         builder.Services.AddTransient<ReciptDetailViewModel>();
         builder.Services.AddTransient<AddReciptViewModel>();
+        builder.Services.AddTransient<EditProfileViewModel>();
         
         // Register Views
         builder.Services.AddTransient<HomePage>();
@@ -38,6 +39,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ProfilePage>();
         builder.Services.AddTransient<RecipeDetailPage>();
         builder.Services.AddTransient<AddRecipePage>();
+        builder.Services.AddTransient<EditProfilePage>();
 
         builder.Logging.AddDebug();
 
