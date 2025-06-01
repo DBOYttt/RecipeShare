@@ -160,9 +160,8 @@ RecipeShare is a cross-platform social cooking application built with .NET MAUI,
 | **Shopping Features** | 100% | ✅ Complete | Full shopping list management |
 | **Backend API** | 5% | ❌ Not Started | Models only |
 | **Authentication** | 15% | ⚠️ Mock Only | UI ready, service needed |
-| **Database Integration** | 10% | ⚠️ Models Only | SQLite integration needed |
+| **Database Integration** | 10% | ⚠️ Models Only | SQL DB integration needed |
 | **Testing & QA** | 25% | ❌ Basic Only | Manual testing done |
-| **Deployment** | 0% | ❌ Not Started | Ready for CI/CD setup |
 
 ---
 
