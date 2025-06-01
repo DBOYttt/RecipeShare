@@ -4,12 +4,12 @@ namespace ReciptShare.Views;
 
 public partial class AddRecipePage : ContentPage
 {
-    private AddRecipeViewModel _viewModel;
+    private AddReciptViewModel _viewModel;
 
     public AddRecipePage()
     {
         InitializeComponent();
-        _viewModel = new AddRecipeViewModel();
+        _viewModel = new AddReciptViewModel();
         BindingContext = _viewModel;
     }
 

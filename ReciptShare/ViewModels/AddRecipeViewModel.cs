@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace ReciptShare.ViewModels
 {
-    public partial class AddRecipeViewModel : BaseViewModel
+    public partial class AddReciptViewModel : BaseViewModel
     {
         [ObservableProperty]
         string recipeTitle = string.Empty;
@@ -45,7 +45,7 @@ namespace ReciptShare.ViewModels
         double newIngredientQuantity = 1;
 
         [ObservableProperty]
-        string newIngredientUnit = "cup";
+        string newIngredientUnit = "g"; // Changed default to grams
 
         [ObservableProperty]
         string newInstruction = string.Empty;
@@ -90,10 +90,34 @@ namespace ReciptShare.ViewModels
             "Asian", "Indian", "Mediterranean", "American", "French", "Thai"
         };
 
+        // Updated with European units
         public List<string> CommonUnits { get; } = new List<string>
         {
-            "cup", "cups", "tbsp", "tsp", "oz", "lb", "g", "kg", "ml", "l", "qt", "gal",
-            "piece", "pieces", "slice", "slices", "clove", "cloves", "can", "package", "bunch"
+            // Weight units (most common first)
+            "g", "kg", "mg",
+            
+            // Volume units (metric)
+            "ml", "l", "dl", "cl",
+            
+            // Cooking measurements
+            "tbsp", "tsp", "dessert spoon",
+            
+            // Count units
+            "piece", "pieces", "pcs",
+            "slice", "slices",
+            "clove", "cloves",
+            
+            // Food-specific units
+            "pinch", "dash", "handful",
+            "can", "tin", "jar",
+            "package", "packet", "sachet",
+            "bunch", "sprig", "leaf", "leaves",
+            
+            // Baking specific
+            "sheet", "layer",
+            
+            // Legacy/International (for recipes from other regions)
+            "cup", "oz", "lb", "fl oz", "pt", "qt", "gal"
         };
 
         public List<string> FormSteps { get; } = new List<string>
@@ -101,7 +125,7 @@ namespace ReciptShare.ViewModels
             "Basic Info", "Ingredients", "Instructions", "Categories", "Final Review"
         };
 
-        public AddRecipeViewModel()
+        public AddReciptViewModel()
         {
             Title = "Add New Recipe";
             CurrentUser = MockDataService.GetCurrentUser();
@@ -141,10 +165,10 @@ namespace ReciptShare.ViewModels
 
             Ingredients.Add(ingredient);
 
-            // Clear form
+            // Clear form with European default
             NewIngredientName = string.Empty;
             NewIngredientQuantity = 1;
-            NewIngredientUnit = "cup";
+            NewIngredientUnit = "g"; // Reset to grams
         }
 
         [RelayCommand]
@@ -197,6 +221,8 @@ namespace ReciptShare.ViewModels
                     break;
             }
         }
+
+        // ... rest of the methods remain the same ...
 
         [RelayCommand]
         private async Task AddInstruction()
@@ -323,9 +349,8 @@ namespace ReciptShare.ViewModels
                     AuthorName = CurrentUser.FullName,
                     PrepTimeMinutes = PrepTimeMinutes,
                     CookTimeMinutes = CookTimeMinutes,
-                    // Don't set TotalTimeMinutes - it's calculated automatically
                     Servings = Servings,
-                    Difficulty = Difficulty, // Use the enum directly
+                    Difficulty = Difficulty,
                     Categories = SelectedCategories.ToList(),
                     Ingredients = Ingredients.ToList(),
                     Instructions = Instructions.ToList(),
@@ -340,9 +365,6 @@ namespace ReciptShare.ViewModels
 
                 // Simulate saving to backend
                 await Task.Delay(2000);
-
-                // In a real app, you would save to your backend here
-                // await _recipeService.SaveRecipeAsync(newRecipe);
 
                 await Shell.Current.DisplayAlert("Success!", 
                     $"'{RecipeTitle}' has been added successfully! 🎉\n\n" +

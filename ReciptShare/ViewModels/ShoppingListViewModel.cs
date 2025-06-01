@@ -31,7 +31,27 @@ namespace ReciptShare.ViewModels
 
         public List<string> CommonUnits { get; } = new List<string>
         {
-            "pcs", "cups", "tbsp", "tsp", "g", "kg", "oz", "lbs", "ml", "l", "qt", "gal"
+            // Weight units (most common first)
+            "g", "kg", "mg",
+    
+            // Volume units (metric)
+            "ml", "l", "dl", "cl",
+    
+            // Cooking measurements
+            "tbsp", "tsp", "dessert spoon",
+    
+            // Count units
+            "pcs", "piece", "pieces",
+            "slice", "slices",
+    
+            // Food-specific units
+            "pinch", "dash", "handful",
+            "can", "tin", "jar",
+            "package", "packet", "sachet",
+            "bunch", "sprig", "leaf", "leaves",
+    
+            // Legacy/International units
+            "cup", "oz", "lb", "fl oz"
         };
 
         public ShoppingListViewModel()

@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="Resources/DataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
-            <!-- Converters -->
+            <!-- All Converters -->
             <converters:BoolToHeartConverter x:Key="BoolToHeartConverter" />
             <converters:IsStringNullOrEmptyConverter x:Key="IsStringNullOrEmptyConverter" />
             <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
@@ -24,8 +24,6 @@
             <converters:TabToColorConverter x:Key="TabToColorConverter" />
             <converters:TabToTextColorConverter x:Key="TabToTextColorConverter" />
             <converters:StringEqualityConverter x:Key="StringEqualityConverter" />
-            
-            <!-- Add Recipe Converters -->
             <converters:StepToProgressConverter x:Key="StepToProgressConverter" />
             <converters:StepToColorConverter x:Key="StepToColorConverter" />
             <converters:StepToTextColorConverter x:Key="StepToTextColorConverter" />
@@ -34,6 +32,7 @@
             <converters:IsNotFirstStepConverter x:Key="IsNotFirstStepConverter" />
             <converters:IsFirstStepConverter x:Key="IsFirstStepConverter" />
             <converters:IsNotLastStepConverter x:Key="IsNotLastStepConverter" />
+            <converters:ListIndexConverter x:Key="ListIndexConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

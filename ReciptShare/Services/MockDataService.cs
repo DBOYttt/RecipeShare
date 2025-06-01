@@ -90,119 +90,131 @@ namespace ReciptShare.Services
             // Initialize Recipes
             _recipes = new List<Recipe>
             {
-                new Recipe
-                {
-                    Id = 1,
-                    Title = "Classic Spaghetti Carbonara",
-                    Description = "Authentic Italian carbonara with eggs, cheese, and pancetta",
-                    ImageUrl = "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400",
-                    PrepTimeMinutes = 10,
-                    CookTimeMinutes = 15,
-                    Servings = 4,
-                    Difficulty = DifficultyLevel.Medium,
-                    Categories = new List<string> { "Italian", "Pasta", "Dinner" },
-                    Ingredients = new List<Ingredient>
-                    {
-                        new Ingredient { Id = 1, Name = "Spaghetti", Quantity = 400, Unit = "g" },
-                        new Ingredient { Id = 2, Name = "Pancetta", Quantity = 150, Unit = "g" },
-                        new Ingredient { Id = 3, Name = "Eggs", Quantity = 3, Unit = "large" },
-                        new Ingredient { Id = 4, Name = "Parmesan cheese", Quantity = 100, Unit = "g" },
-                        new Ingredient { Id = 5, Name = "Black pepper", Quantity = 1, Unit = "tsp" }
-                    },
-                    Instructions = new List<string>
-                    {
-                        "Bring a large pot of salted water to boil",
-                        "Cook spaghetti according to package directions",
-                        "Meanwhile, cook pancetta until crispy",
-                        "Beat eggs with grated parmesan and black pepper",
-                        "Drain pasta, reserving 1 cup pasta water",
-                        "Toss hot pasta with pancetta and egg mixture",
-                        "Add pasta water as needed for creamy consistency",
-                        "Serve immediately with extra parmesan"
-                    },
-                    AuthorId = 2,
-                    AuthorName = "ChefMaria",
-                    CreatedDate = DateTime.Now.AddDays(-5),
-                    Rating = 4.8,
-                    RatingsCount = 156,
-                    CommentsCount = 23,
-                    LikesCount = 289
-                },
-                new Recipe
-                {
-                    Id = 2,
-                    Title = "Healthy Buddha Bowl",
-                    Description = "Nutritious bowl with quinoa, roasted vegetables, and tahini dressing",
-                    ImageUrl = "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400",
-                    PrepTimeMinutes = 20,
-                    CookTimeMinutes = 25,
-                    Servings = 2,
-                    Difficulty = DifficultyLevel.Easy,
-                    Categories = new List<string> { "Healthy", "Vegetarian", "Lunch" },
-                    Ingredients = new List<Ingredient>
-                    {
-                        new Ingredient { Id = 6, Name = "Quinoa", Quantity = 1, Unit = "cup" },
-                        new Ingredient { Id = 7, Name = "Sweet potato", Quantity = 1, Unit = "large" },
-                        new Ingredient { Id = 8, Name = "Chickpeas", Quantity = 1, Unit = "can" },
-                        new Ingredient { Id = 9, Name = "Spinach", Quantity = 2, Unit = "cups" },
-                        new Ingredient { Id = 10, Name = "Tahini", Quantity = 3, Unit = "tbsp" }
-                    },
-                    Instructions = new List<string>
-                    {
-                        "Cook quinoa according to package instructions",
-                        "Cube and roast sweet potato at 400°F for 20 minutes",
-                        "Drain and rinse chickpeas",
-                        "Make tahini dressing with lemon juice and water",
-                        "Assemble bowls with quinoa base",
-                        "Top with roasted vegetables and chickpeas",
-                        "Add fresh spinach and drizzle with dressing"
-                    },
-                    AuthorId = 3,
-                    AuthorName = "HealthyEats",
-                    CreatedDate = DateTime.Now.AddDays(-2),
-                    Rating = 4.6,
-                    RatingsCount = 89,
-                    CommentsCount = 12,
-                    LikesCount = 167
-                },
-                new Recipe
-                {
-                    Id = 3,
-                    Title = "Chocolate Chip Cookies",
-                    Description = "Classic homemade chocolate chip cookies that are crispy outside, chewy inside",
-                    ImageUrl = "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400",
-                    PrepTimeMinutes = 15,
-                    CookTimeMinutes = 12,
-                    Servings = 24,
-                    Difficulty = DifficultyLevel.Easy,
-                    Categories = new List<string> { "Dessert", "Baking", "Sweet" },
-                    Ingredients = new List<Ingredient>
-                    {
-                        new Ingredient { Id = 11, Name = "All-purpose flour", Quantity = 2.25, Unit = "cups" },
-                        new Ingredient { Id = 12, Name = "Butter", Quantity = 1, Unit = "cup" },
-                        new Ingredient { Id = 13, Name = "Brown sugar", Quantity = 0.75, Unit = "cup" },
-                        new Ingredient { Id = 14, Name = "White sugar", Quantity = 0.75, Unit = "cup" },
-                        new Ingredient { Id = 15, Name = "Chocolate chips", Quantity = 2, Unit = "cups" }
-                    },
-                    Instructions = new List<string>
-                    {
-                        "Preheat oven to 180 C",
-                        "Cream butter and sugars until light and fluffy",
-                        "Beat in eggs and vanilla",
-                        "Gradually blend in flour",
-                        "Stir in chocolate chips",
-                        "Drop rounded tablespoons onto ungreased cookie sheets",
-                        "Bake 9-11 minutes until golden brown",
-                        "Cool on baking sheet for 2 minutes before removing"
-                    },
-                    AuthorId = 1,
-                    AuthorName = "DBOYttt",
-                    CreatedDate = DateTime.Now.AddDays(-1),
-                    Rating = 4.9,
-                    RatingsCount = 234,
-                    CommentsCount = 45,
-                    LikesCount = 512
-                }
+                    new Recipe
+        {
+            Id = 1,
+            Title = "Classic Spaghetti Carbonara",
+            Description = "Authentic Italian pasta dish with eggs, cheese, and pancetta",
+            AuthorId = 1,
+            AuthorName = "Marco Rossi",
+            PrepTimeMinutes = 10,
+            CookTimeMinutes = 15,
+            Servings = 4,
+            Difficulty = DifficultyLevel.Medium,
+            Categories = new List<string> { "Italian", "Main Course", "Pasta" },
+            Ingredients = new List<Ingredient>
+            {
+                new Ingredient { Id = 1, Name = "Spaghetti", Quantity = 400, Unit = "g" },
+                new Ingredient { Id = 2, Name = "Pancetta", Quantity = 150, Unit = "g" },
+                new Ingredient { Id = 3, Name = "Eggs", Quantity = 3, Unit = "pieces" },
+                new Ingredient { Id = 4, Name = "Parmesan cheese", Quantity = 100, Unit = "g" },
+                new Ingredient { Id = 5, Name = "Black pepper", Quantity = 1, Unit = "tsp" },
+                new Ingredient { Id = 6, Name = "Salt", Quantity = 1, Unit = "pinch" }
+            },
+            Instructions = new List<string>
+            {
+                "Bring a large pot of salted water to boil and cook spaghetti according to package directions.",
+                "While pasta cooks, heat a large skillet over medium heat and cook pancetta until crispy.",
+                "In a bowl, whisk together eggs, grated Parmesan, and black pepper.",
+                "Drain pasta, reserving 250ml of pasta water.",
+                "Add hot pasta to pancetta pan and toss.",
+                "Remove from heat and quickly stir in egg mixture, adding pasta water as needed.",
+                "Serve immediately with extra Parmesan and pepper."
+            },
+            ImageUrl = "",
+            CreatedDate = DateTime.Now.AddDays(-5),
+            Rating = 4.8,
+            RatingsCount = 156,
+            LikesCount = 89,
+            CommentsCount = 23,
+            IsFavorited = true
+        },
+        new Recipe
+        {
+            Id = 2,
+            Title = "Mediterranean Chicken Salad",
+            Description = "Fresh and healthy salad with grilled chicken and Mediterranean flavors",
+            AuthorId = 2,
+            AuthorName = "Sofia Papadopoulos",
+            PrepTimeMinutes = 20,
+            CookTimeMinutes = 15,
+            Servings = 2,
+            Difficulty = DifficultyLevel.Easy,
+            Categories = new List<string> { "Mediterranean", "Salad", "Healthy", "Gluten-Free" },
+            Ingredients = new List<Ingredient>
+            {
+                new Ingredient { Id = 7, Name = "Chicken breast", Quantity = 300, Unit = "g" },
+                new Ingredient { Id = 8, Name = "Mixed greens", Quantity = 100, Unit = "g" },
+                new Ingredient { Id = 9, Name = "Cherry tomatoes", Quantity = 200, Unit = "g" },
+                new Ingredient { Id = 10, Name = "Cucumber", Quantity = 1, Unit = "piece" },
+                new Ingredient { Id = 11, Name = "Feta cheese", Quantity = 100, Unit = "g" },
+                new Ingredient { Id = 12, Name = "Olives", Quantity = 50, Unit = "g" },
+                new Ingredient { Id = 13, Name = "Olive oil", Quantity = 3, Unit = "tbsp" },
+                new Ingredient { Id = 14, Name = "Lemon juice", Quantity = 2, Unit = "tbsp" },
+                new Ingredient { Id = 15, Name = "Oregano", Quantity = 1, Unit = "tsp" }
+            },
+            Instructions = new List<string>
+            {
+                "Season chicken breast with salt, pepper, and oregano.",
+                "Grill chicken for 6-7 minutes per side until cooked through.",
+                "Let chicken rest for 5 minutes, then slice.",
+                "In a large bowl, combine mixed greens, halved cherry tomatoes, and diced cucumber.",
+                "Crumble feta cheese and add olives to the salad.",
+                "Whisk together olive oil, lemon juice, oregano, salt, and pepper for dressing.",
+                "Top salad with sliced chicken and drizzle with dressing."
+            },
+            ImageUrl = "",
+            CreatedDate = DateTime.Now.AddDays(-3),
+            Rating = 4.6,
+            RatingsCount = 89,
+            LikesCount = 67,
+            CommentsCount = 15,
+            IsFavorited = false
+        },
+        new Recipe
+        {
+            Id = 3,
+            Title = "Chocolate Chip Cookies",
+            Description = "Classic homemade cookies that are crispy on the outside and chewy on the inside",
+            AuthorId = 3,
+            AuthorName = "Emma Thompson",
+            PrepTimeMinutes = 15,
+            CookTimeMinutes = 12,
+            Servings = 24,
+            Difficulty = DifficultyLevel.Easy,
+            Categories = new List<string> { "Desserts", "Cookies", "Baking" },
+            Ingredients = new List<Ingredient>
+            {
+                new Ingredient { Id = 16, Name = "Plain flour", Quantity = 225, Unit = "g" },
+                new Ingredient { Id = 17, Name = "Butter", Quantity = 115, Unit = "g" },
+                new Ingredient { Id = 18, Name = "Brown sugar", Quantity = 100, Unit = "g" },
+                new Ingredient { Id = 19, Name = "Caster sugar", Quantity = 50, Unit = "g" },
+                new Ingredient { Id = 20, Name = "Egg", Quantity = 1, Unit = "piece" },
+                new Ingredient { Id = 21, Name = "Vanilla extract", Quantity = 1, Unit = "tsp" },
+                new Ingredient { Id = 22, Name = "Baking soda", Quantity = 1, Unit = "tsp" },
+                new Ingredient { Id = 23, Name = "Salt", Quantity = 1, Unit = "pinch" },
+                new Ingredient { Id = 24, Name = "Chocolate chips", Quantity = 175, Unit = "g" }
+            },
+            Instructions = new List<string>
+            {
+                "Preheat oven to 190°C (375°F). Line baking sheets with parchment paper.",
+                "In a bowl, cream together butter, brown sugar, and caster sugar until light and fluffy.",
+                "Beat in egg and vanilla extract.",
+                "In a separate bowl, whisk together flour, baking soda, and salt.",
+                "Gradually mix dry ingredients into wet ingredients.",
+                "Fold in chocolate chips.",
+                "Drop rounded tablespoons of dough onto prepared baking sheets, spacing 5cm apart.",
+                "Bake for 10-12 minutes until edges are golden brown.",
+                "Cool on baking sheet for 5 minutes before transferring to wire rack."
+            },
+            ImageUrl = "",
+            CreatedDate = DateTime.Now.AddDays(-1),
+            Rating = 4.9,
+            RatingsCount = 234,
+            LikesCount = 198,
+            CommentsCount = 45,
+            IsFavorited = true
+        }
             };
 
             // Initialize Comments
