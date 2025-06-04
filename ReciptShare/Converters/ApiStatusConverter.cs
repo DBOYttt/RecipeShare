@@ -2,22 +2,21 @@ using System.Globalization;
 
 namespace ReciptShare.Converters
 {
-    public class ApiStatusConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public class ApiStatusConverter : IValueConverter
         {
-            if (value is bool isConnected)
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             {
-                return isConnected 
-                    ? "🟢 API Connected - Online Mode" 
-                    : "🔴 API Offline - Local Mode";
+                if (value is bool isConnected)
+                {
+                    return isConnected ? "🟢 API Connected" : "🟠 Offline Mode";
+                }
+                return "⚫ Unknown Status";
             }
-            return "🟡 API Status Unknown";
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
         }
+    
     }
-}

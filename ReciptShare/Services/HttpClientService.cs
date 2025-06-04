@@ -1,7 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization; // ADD THIS LINE
+using System.Text.Json.Serialization;
 
 namespace ReciptShare.Services
 {
@@ -47,7 +47,8 @@ namespace ReciptShare.Services
             var handler = new HttpClientHandler();
 
 #if ANDROID
-            // For Android, we might need specific configuration
+            // For Android, we might need specific configuration for external APIs
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
 #endif
 
             _httpClient = new HttpClient(handler);
@@ -57,12 +58,17 @@ namespace ReciptShare.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
             
-            // Set timeout
-            _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            // Set User-Agent for API identification
+            _httpClient.DefaultRequestHeaders.UserAgent.Add(
+                new ProductInfoHeaderValue("RecipeShareApp", "1.0"));
+            
+            // Set timeout for external API
+            _httpClient.Timeout = TimeSpan.FromSeconds(15);
         }
 
         private string GetApiBaseUrl()
         {
+            // Use your actual API URL
             return "http://srv12.mikr.us:30346/api";
         }
 
@@ -130,11 +136,13 @@ namespace ReciptShare.Services
         {
             _httpClient.DefaultRequestHeaders.Authorization = 
                 new AuthenticationHeaderValue("Bearer", token);
+            System.Diagnostics.Debug.WriteLine("[API] Auth token set");
         }
 
         public void ClearAuthToken()
         {
             _httpClient.DefaultRequestHeaders.Authorization = null;
+            System.Diagnostics.Debug.WriteLine("[API] Auth token cleared");
         }
 
         public async Task<T?> GetAsync<T>(string endpoint)
@@ -152,6 +160,11 @@ namespace ReciptShare.Services
                 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (string.IsNullOrWhiteSpace(content))
+                    {
+                        return default;
+                    }
+                    
                     return JsonSerializer.Deserialize<T>(content, _jsonOptions);
                 }
                 
@@ -185,6 +198,11 @@ namespace ReciptShare.Services
                 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (string.IsNullOrWhiteSpace(responseContent))
+                    {
+                        return default;
+                    }
+                    
                     return JsonSerializer.Deserialize<T>(responseContent, _jsonOptions);
                 }
                 
@@ -207,13 +225,22 @@ namespace ReciptShare.Services
                 var json = data != null ? JsonSerializer.Serialize(data, _jsonOptions) : "";
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 
+                System.Diagnostics.Debug.WriteLine($"[API] PUT: {fullUrl}");
+                System.Diagnostics.Debug.WriteLine($"[API] Body: {json}");
+                
                 var response = await _httpClient.PutAsync(fullUrl, content);
                 _isApiAvailable = true;
                 
                 var responseContent = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine($"[API] Response: {response.StatusCode}");
                 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (string.IsNullOrWhiteSpace(responseContent))
+                    {
+                        return default;
+                    }
+                    
                     return JsonSerializer.Deserialize<T>(responseContent, _jsonOptions);
                 }
                 
@@ -232,9 +259,13 @@ namespace ReciptShare.Services
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"{_baseUrl}{endpoint}");
+                var fullUrl = $"{_baseUrl}{endpoint}";
+                System.Diagnostics.Debug.WriteLine($"[API] DELETE: {fullUrl}");
+                
+                var response = await _httpClient.DeleteAsync(fullUrl);
                 _isApiAvailable = true;
                 
+                System.Diagnostics.Debug.WriteLine($"[API] Response: {response.StatusCode}");
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -250,16 +281,20 @@ namespace ReciptShare.Services
             try
             {
                 var errorResponse = JsonSerializer.Deserialize<Models.Api.ApiErrorResponse>(content, _jsonOptions);
-                throw new ApiException($"{errorResponse?.Error}: {errorResponse?.Message}");
+                var errorMessage = $"{errorResponse?.Error}: {errorResponse?.Message}";
+                System.Diagnostics.Debug.WriteLine($"[API] Error Response: {errorMessage}");
+                throw new ApiException(errorMessage);
             }
             catch (JsonException)
             {
-                throw new ApiException($"API Error: {response.StatusCode} - {content}");
+                var errorMessage = $"API Error: {response.StatusCode} - {content}";
+                System.Diagnostics.Debug.WriteLine($"[API] Error Response (raw): {errorMessage}");
+                throw new ApiException(errorMessage);
             }
         }
     }
 
-    // Health Response Model
+    // Health Response Model for your API
     public class ApiHealthResponse
     {
         [JsonPropertyName("status")]
