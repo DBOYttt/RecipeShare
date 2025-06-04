@@ -63,13 +63,7 @@ namespace ReciptShare.Services
 
         private string GetApiBaseUrl()
         {
-#if ANDROID
-            return "http://10.0.2.2:3000/api";
-#elif IOS
-            return "http://localhost:3000/api";
-#else
-            return "http://localhost:3000/api";
-#endif
+            return "http://srv12.mikr.us:30346/api";
         }
 
         public async Task<bool> CheckApiHealthAsync()
