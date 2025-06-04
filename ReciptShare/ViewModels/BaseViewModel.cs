@@ -5,12 +5,22 @@ namespace ReciptShare.ViewModels
     public partial class BaseViewModel : ObservableObject
     {
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
         bool isBusy;
 
         [ObservableProperty]
         string title = string.Empty;
 
-        public bool IsNotBusy => !IsBusy;
+        [ObservableProperty]
+        bool isApiConnected = true;
+
+        public BaseViewModel()
+        {
+            // Keep it simple for now - we'll handle API status in individual ViewModels
+        }
+
+        protected void SetApiStatus(bool isConnected)
+        {
+            IsApiConnected = isConnected;
+        }
     }
 }

@@ -33,6 +33,8 @@
             <converters:IsFirstStepConverter x:Key="IsFirstStepConverter" />
             <converters:IsNotLastStepConverter x:Key="IsNotLastStepConverter" />
             <converters:ListIndexConverter x:Key="ListIndexConverter" />
+            <converters:ApiStatusConverter x:Key="ApiStatusConverter" />
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

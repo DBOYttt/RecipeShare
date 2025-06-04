@@ -63,4 +63,8 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="Platforms\Android\Resources\xml\network_security_config.xaml" />
+    </ItemGroup>
+
 </Project>

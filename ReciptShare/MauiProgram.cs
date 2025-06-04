@@ -19,6 +19,9 @@ public static class MauiProgram
             });
 
         // Register services
+        builder.Services.AddSingleton<IHttpClientService, HttpClientService>();
+        builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        builder.Services.AddSingleton<IApiStatusService, ApiStatusService>();
         builder.Services.AddSingleton<MockDataService>();
         
         // Register ViewModels
