@@ -6,10 +6,10 @@ public partial class ProfilePage : ContentPage
 {
     private ProfileViewModel _viewModel;
 
-    public ProfilePage()
+    public ProfilePage(ProfileViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = new ProfileViewModel();
+        _viewModel = viewModel;
         BindingContext = _viewModel;
     }
 

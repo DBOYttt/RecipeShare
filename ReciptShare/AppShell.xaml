@@ -38,4 +38,15 @@
             Icon="profile_icon.png" />
     </TabBar>
 
+    <!-- Authentication Pages -->
+    <ShellContent
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="login" />
+    <ShellContent
+        ContentTemplate="{DataTemplate local:RegisterPage}"
+        Route="register" />
+    <ShellContent
+        ContentTemplate="{DataTemplate local:WelcomePage}"
+        Route="welcome" />
+
 </Shell>

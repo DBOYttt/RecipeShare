@@ -6,10 +6,10 @@ public partial class AddRecipePage : ContentPage
 {
     private AddReciptViewModel _viewModel;
 
-    public AddRecipePage()
+    public AddRecipePage(AddReciptViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = new AddReciptViewModel();
+        _viewModel = viewModel;
         BindingContext = _viewModel;
     }
 
