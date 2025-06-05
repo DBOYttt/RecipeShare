@@ -1,11 +1,26 @@
-﻿namespace ReciptShare;
+using ReciptShare.Services;
+
+namespace ReciptShare;
 
 public partial class App : Application
 {
-    public App()
+    private readonly IAuthenticationService _authService;
+    private readonly AppShell _shell;
+
+    public App(AppShell shell, IAuthenticationService authService)
     {
         InitializeComponent();
+        _shell = shell;
+        _authService = authService;
 
-        MainPage = new AppShell();
+        MainPage = _shell;
+
+        _shell.Dispatcher.Dispatch(async () =>
+        {
+            if (!_authService.IsAuthenticated)
+            {
+                await _shell.GoToAsync("//login");
+            }
+        });
     }
 }

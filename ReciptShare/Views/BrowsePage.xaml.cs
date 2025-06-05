@@ -6,10 +6,10 @@ public partial class BrowsePage : ContentPage
 {
     private BrowseViewModel _viewModel;
 
-    public BrowsePage()
+    public BrowsePage(BrowseViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = new BrowseViewModel();
+        _viewModel = viewModel;
         BindingContext = _viewModel;
     }
 

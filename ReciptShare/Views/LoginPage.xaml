@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ReciptShare.Views.LoginPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
+             x:DataType="viewmodels:LoginViewModel"
+             Title="{Binding Title}">
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Email or Username" />
+        <Entry Text="{Binding EmailOrUsername}" Placeholder="Enter email or username" />
+        <Label Text="Password" />
+        <Entry Text="{Binding Password}" IsPassword="True" Placeholder="Enter password" />
+        <Button Text="Login" Command="{Binding LoginCommand}" />
+        <Button Text="Register" Command="{Binding NavigateToRegisterCommand}" />
+        <Label Text="{Binding StatusMessage}" TextColor="Red" />
+    </StackLayout>
+</ContentPage>

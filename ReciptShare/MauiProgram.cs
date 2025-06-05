@@ -23,6 +23,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
         builder.Services.AddSingleton<IApiStatusService, ApiStatusService>();
         builder.Services.AddSingleton<MockDataService>();
+        builder.Services.AddSingleton<AppShell>();
         
         // Register ViewModels
         builder.Services.AddTransient<HomeViewModel>();
@@ -30,9 +31,11 @@ public static class MauiProgram
         builder.Services.AddTransient<FavoritesViewModel>();
         builder.Services.AddTransient<ShoppingListViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
-        builder.Services.AddTransient<ReciptDetailViewModel>();
+        builder.Services.AddTransient<RecipeDetailViewModel>();
         builder.Services.AddTransient<AddReciptViewModel>();
         builder.Services.AddTransient<EditProfileViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<RegisterViewModel>();
         
         // Register Views
         builder.Services.AddTransient<HomePage>();
@@ -43,6 +46,8 @@ public static class MauiProgram
         builder.Services.AddTransient<RecipeDetailPage>();
         builder.Services.AddTransient<AddRecipePage>();
         builder.Services.AddTransient<EditProfilePage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
 
         builder.Logging.AddDebug();
 

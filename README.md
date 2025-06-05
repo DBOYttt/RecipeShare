@@ -225,12 +225,13 @@ RecipeShare is a cross-platform social cooking application built with .NET MAUI,
 ## 🚀 **Getting Started**
 
 ### Prerequisites
-- .NET 8.0 SDK or later
+- .NET 8.0 SDK or later with mobile workloads installed (Android, iOS, MacCatalyst)
 - Visual Studio 2022 (17.8+) or VS Code with C# extension
-- Android SDK (for Android development)
+- Android SDK tools (for Android development)
 - Xcode (for iOS development on macOS)
 
 ### Running the Project
+Ensure the required mobile workloads are installed. Building will fail if the Android or iOS targets are missing.
 ```bash
 git clone [repository-url]
 cd RecipeShare

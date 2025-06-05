@@ -6,10 +6,10 @@ public partial class EditProfilePage : ContentPage
 {
     private EditProfileViewModel _viewModel;
 
-    public EditProfilePage()
+    public EditProfilePage(EditProfileViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = new EditProfileViewModel();
+        _viewModel = viewModel;
         BindingContext = _viewModel;
     }
 
