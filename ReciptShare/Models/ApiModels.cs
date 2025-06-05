@@ -60,8 +60,6 @@ namespace ReciptShare.Models.Api
         [JsonPropertyName("bio")]
         public string? Bio { get; set; }
 
-        [JsonPropertyName("profileImageUrl")]
-        public string? ProfileImageUrl { get; set; }
     }
 
     public class AuthResponse
