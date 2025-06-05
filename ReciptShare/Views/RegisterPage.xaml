@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ReciptShare.Views.RegisterPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
+             x:DataType="viewmodels:RegisterViewModel"
+             Title="{Binding Title}">
+    <ScrollView>
+    <StackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <Image Source="logo.png" HeightRequest="100" HorizontalOptions="Center" />
+        <Label Text="Username" />
+        <Entry Text="{Binding Username}" Placeholder="Choose a username" />
+        <Label Text="Email" />
+        <Entry Text="{Binding Email}" Placeholder="Enter email" />
+        <Label Text="Password" />
+        <Entry Text="{Binding Password}" IsPassword="True" Placeholder="Create password" />
+        <Label Text="First Name" />
+        <Entry Text="{Binding FirstName}" />
+        <Label Text="Last Name" />
+        <Entry Text="{Binding LastName}" />
+        <Label Text="Bio" />
+        <Editor Text="{Binding Bio}" HeightRequest="60" />
+        <Button Text="Register" Command="{Binding RegisterCommand}" />
+        <Button Text="Back to Login" Command="{Binding NavigateToLoginCommand}" />
+        <Button Text="Continue as Guest" Command="{Binding NavigateToHomeCommand}" />
+        <Label Text="{Binding StatusMessage}" TextColor="Red" />
+    </StackLayout>
+    </ScrollView>
+</ContentPage>
