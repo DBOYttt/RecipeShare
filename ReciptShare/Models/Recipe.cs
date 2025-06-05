@@ -5,39 +5,102 @@ namespace ReciptShare.Models
 {
     public partial class Recipe : ObservableObject
     {
-        // Original properties for backward compatibility
+        // Original properties for backward compatibility - Add JsonIgnore to prevent collisions
+        [JsonIgnore]
         public int Id { get; set; }
+        
+        [JsonIgnore]
         public string Title { get; set; } = string.Empty;
+        
+        [JsonIgnore]
         public string Description { get; set; } = string.Empty;
+        
+        [JsonIgnore]
         public int AuthorId { get; set; }
+        
+        [JsonIgnore]
         public string AuthorName { get; set; } = string.Empty;
+        
+        [JsonIgnore]
         public string AuthorAvatarUrl { get; set; } = string.Empty;
+        
+        [JsonIgnore]
         public int PrepTimeMinutes { get; set; }
+        
+        [JsonIgnore]
         public int CookTimeMinutes { get; set; }
         
         // Make TotalTimeMinutes calculated property with setter for backwards compatibility
+        [JsonIgnore]
         public int TotalTimeMinutes 
         { 
             get => PrepTimeMinutes + CookTimeMinutes;
             set { } // Empty setter for compatibility - value is calculated
         }
         
+        [JsonIgnore]
         public int Servings { get; set; }
+        
+        [JsonIgnore]
         public DifficultyLevel Difficulty { get; set; }
+        
+        [JsonIgnore]
         public List<string> Categories { get; set; } = new List<string>();
+        
+        [JsonIgnore]
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+        
+        [JsonIgnore]
         public List<string> Instructions { get; set; } = new List<string>();
+        
+        [JsonIgnore]
         public string ImageUrl { get; set; } = string.Empty;
+        
+        [JsonIgnore]
         public DateTime CreatedDate { get; set; }
+        
+        [JsonIgnore]
         public double Rating { get; set; }
+        
+        [JsonIgnore]
         public int RatingsCount { get; set; }
+        
+        [JsonIgnore]
         public int LikesCount { get; set; }
+        
+        [JsonIgnore]
         public int CommentsCount { get; set; }
+        
+        [JsonIgnore]
         public bool IsFavorited { get; set; }
 
-        // New API-specific properties with JsonPropertyName attributes
+        // API-specific properties with JsonPropertyName attributes
         [JsonPropertyName("id")]
         public string ApiId { get; set; } = string.Empty;
+
+        [JsonPropertyName("title")]
+        public string ApiTitle 
+        { 
+            get => Title; 
+            set => Title = value ?? string.Empty; 
+        }
+
+        [JsonPropertyName("description")]
+        public string ApiDescription 
+        { 
+            get => Description; 
+            set => Description = value ?? string.Empty; 
+        }
+
+        [JsonPropertyName("instructions")]
+        public List<string> ApiInstructions 
+        { 
+            get => Instructions; 
+            set => Instructions = value ?? new List<string>(); 
+        }
+
+        [JsonPropertyName("ingredients")]
+        public List<ApiIngredient> ApiIngredients { get; set; } = new();
 
         [JsonPropertyName("prepTimeMinutes")]
         public int ApiPrepTimeMinutes 
@@ -150,6 +213,18 @@ namespace ReciptShare.Models
                 Rating = Stats.AverageRating ?? 0.0;
                 RatingsCount = Stats.RatingsCount;
             }
+
+            // Convert API ingredients to legacy format - Fixed without Notes property
+            if (ApiIngredients?.Any() == true)
+            {
+                Ingredients = ApiIngredients.Select(ai => new Ingredient
+                {
+                    Name = ai.Name,
+                    Quantity = ai.Quantity,
+                    Unit = ai.Unit
+                    // Removed Notes since your Ingredient class doesn't have it
+                }).ToList();
+            }
         }
     }
 
@@ -159,6 +234,22 @@ namespace ReciptShare.Models
         Medium = 2,
         Hard = 3,
         Expert = 4
+    }
+
+    // API-specific ingredient class - simplified to match your Ingredient class
+    public class ApiIngredient
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("quantity")]
+        public double Quantity { get; set; }
+
+        [JsonPropertyName("unit")]
+        public string Unit { get; set; } = string.Empty;
+
+        [JsonPropertyName("notes")]
+        public string? Notes { get; set; } // Keep this for API compatibility, but don't use it in mapping
     }
 
     // API-specific classes
