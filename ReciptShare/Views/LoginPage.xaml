@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ReciptShare.Views.LoginPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
+             x:DataType="viewmodels:LoginViewModel"
+             Title="{Binding Title}">
+    <ScrollView>
+    <StackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <Image Source="logo.png" HeightRequest="100" HorizontalOptions="Center" />
+        <Label Text="Welcome back!" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center" />
+        <Entry Text="{Binding EmailOrUsername}" Placeholder="Email or username" />
+        <Entry Text="{Binding Password}" IsPassword="True" Placeholder="Password" />
+        <Button Text="Login" Command="{Binding LoginCommand}" />
+        <Button Text="Register" Command="{Binding NavigateToRegisterCommand}" />
+        <Button Text="Continue as Guest" Command="{Binding NavigateToHomeCommand}" />
+        <Label Text="{Binding StatusMessage}" TextColor="Red" HorizontalOptions="Center" />
+    </StackLayout>
+    </ScrollView>
+</ContentPage>

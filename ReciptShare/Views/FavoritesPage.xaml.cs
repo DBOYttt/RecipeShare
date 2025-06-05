@@ -6,10 +6,10 @@ public partial class FavoritesPage : ContentPage
 {
     private FavoritesViewModel _viewModel;
 
-    public FavoritesPage()
+    public FavoritesPage(FavoritesViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = new FavoritesViewModel();
+        _viewModel = viewModel;
         BindingContext = _viewModel;
     }
 
@@ -17,6 +17,6 @@ public partial class FavoritesPage : ContentPage
     {
         base.OnAppearing();
         // Refresh favorites when page appears (in case favorites were changed on other pages)
-        _viewModel.LoadFavorites();
+        _ = _viewModel.LoadFavoritesAsync();
     }
 }

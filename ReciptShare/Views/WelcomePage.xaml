@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ReciptShare.Views.WelcomePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
+             x:DataType="viewmodels:WelcomeViewModel"
+             Title="Welcome">
+    <ScrollView>
+    <StackLayout Padding="30" Spacing="25" VerticalOptions="Center">
+        <Image Source="logo.png" HeightRequest="120" HorizontalOptions="Center" />
+        <Label Text="Welcome to RecipeShare" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center" />
+        <Label Text="Share and explore amazing recipes" HorizontalOptions="Center" />
+        <Button Text="Login" Command="{Binding GoToLoginCommand}" />
+        <Button Text="Register" Command="{Binding GoToRegisterCommand}" />
+        <Button Text="Continue as Guest" Command="{Binding ContinueAsGuestCommand}" />
+    </StackLayout>
+    </ScrollView>
+</ContentPage>
