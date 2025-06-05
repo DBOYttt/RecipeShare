@@ -6,12 +6,12 @@ public partial class RecipeDetailPage : ContentPage
 {
     private ReciptDetailViewModel _viewModel;
 
-    public RecipeDetailPage()
+    public RecipeDetailPage(ReciptDetailViewModel viewModel)
     {
         try
         {
             InitializeComponent();
-            _viewModel = new ReciptDetailViewModel();
+            _viewModel = viewModel;
             BindingContext = _viewModel;
         }
         catch (Exception ex)

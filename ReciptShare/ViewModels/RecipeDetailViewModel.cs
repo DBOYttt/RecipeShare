@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using ReciptShare.Models;
 using ReciptShare.Services;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ReciptShare.ViewModels
 {
@@ -39,25 +41,50 @@ namespace ReciptShare.ViewModels
         [ObservableProperty]
         int recipeId;
 
-        public ReciptDetailViewModel()
+        private readonly MockDataService _mockDataService;
+        private readonly IHttpClientService? _httpClientService;
+
+        public ReciptDetailViewModel(MockDataService mockDataService, IHttpClientService httpClientService)
         {
             Title = "Recipe Details";
-            CurrentUser = MockDataService.GetCurrentUser();
+            _mockDataService = mockDataService;
+            _httpClientService = httpClientService;
+
+            CurrentUser = _mockDataService.GetCurrentUserInstance();
             Comments = new ObservableCollection<Comment>();
             Ratings = new ObservableCollection<Rating>();
             InstructionsWithNumbers = new ObservableCollection<NumberedInstruction>();
         }
 
-        partial void OnRecipeIdChanged(int value)
+        public ReciptDetailViewModel() : this(new MockDataService(), new HttpClientService())
         {
-            LoadRecipeData(value);
         }
 
-        private void LoadRecipeData(int id)
+        partial void OnRecipeIdChanged(int value)
+        {
+            _ = LoadRecipeDataAsync(value);
+        }
+
+        private async Task LoadRecipeDataAsync(int id)
         {
             try
             {
-                CurrentRecipe = MockDataService.GetRecipeById(id);
+                if (_httpClientService != null)
+                {
+                    await _httpClientService.CheckApiHealthAsync();
+                }
+
+                if (_httpClientService?.IsApiAvailable == true)
+                {
+                    var response = await _httpClientService.GetAsync<ApiResponse<Recipe>>($"/recipes/{id}");
+                    CurrentRecipe = response?.Data;
+                    CurrentRecipe?.SyncFromApi();
+                }
+                else
+                {
+                    CurrentRecipe = _mockDataService.GetRecipeByIdInstance(id);
+                }
+
                 if (CurrentRecipe != null)
                 {
                     Title = CurrentRecipe.Title;
@@ -68,27 +95,78 @@ namespace ReciptShare.ViewModels
             }
             catch (Exception ex)
             {
-                // Log error or handle gracefully
-                Shell.Current.DisplayAlert("Error", $"Failed to load recipe: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Error", $"Failed to load recipe: {ex.Message}", "OK");
             }
         }
 
-        private void LoadComments()
+        private async void LoadComments()
         {
-            var allComments = MockDataService.GetComments();
-            var recipeComments = allComments.Where(c => c.RecipeId == CurrentRecipe.Id).ToList();
             Comments.Clear();
+            if (_httpClientService?.IsApiAvailable == true && !string.IsNullOrEmpty(CurrentRecipe?.ApiId))
+            {
+                try
+                {
+                    var response = await _httpClientService.GetAsync<ApiResponse<List<Comment>>>($"/recipes/{CurrentRecipe!.ApiId}/comments");
+                    if (response?.Data != null)
+                    {
+                        foreach (var c in response.Data)
+                        {
+                            Comments.Add(c);
+                        }
+                    }
+                }
+                catch
+                {
+                    LoadCommentsFromMock();
+                }
+            }
+            else
+            {
+                LoadCommentsFromMock();
+            }
+        }
+
+        private void LoadCommentsFromMock()
+        {
+            var allComments = _mockDataService.GetCommentsInstance();
+            var recipeComments = allComments.Where(c => c.RecipeId == CurrentRecipe!.Id).ToList();
             foreach (var comment in recipeComments)
             {
                 Comments.Add(comment);
             }
         }
 
-        private void LoadRatings()
+        private async void LoadRatings()
         {
-            var allRatings = MockDataService.GetRatings();
-            var recipeRatings = allRatings.Where(r => r.RecipeId == CurrentRecipe.Id).ToList();
             Ratings.Clear();
+            if (_httpClientService?.IsApiAvailable == true && !string.IsNullOrEmpty(CurrentRecipe?.ApiId))
+            {
+                try
+                {
+                    var response = await _httpClientService.GetAsync<ApiResponse<List<Rating>>>($"/recipes/{CurrentRecipe!.ApiId}/ratings");
+                    if (response?.Data != null)
+                    {
+                        foreach (var r in response.Data)
+                        {
+                            Ratings.Add(r);
+                        }
+                    }
+                }
+                catch
+                {
+                    LoadRatingsFromMock();
+                }
+            }
+            else
+            {
+                LoadRatingsFromMock();
+            }
+        }
+
+        private void LoadRatingsFromMock()
+        {
+            var allRatings = _mockDataService.GetRatingsInstance();
+            var recipeRatings = allRatings.Where(r => r.RecipeId == CurrentRecipe!.Id).ToList();
             foreach (var rating in recipeRatings)
             {
                 Ratings.Add(rating);

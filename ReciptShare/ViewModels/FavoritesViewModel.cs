@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using ReciptShare.Models;
 using ReciptShare.Services;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ReciptShare.ViewModels
 {
@@ -20,49 +21,130 @@ namespace ReciptShare.ViewModels
         [ObservableProperty]
         string sortOption = "Latest";
 
-        public List<string> SortOptions { get; } = new List<string> 
-        { 
-            "Latest", 
-            "Rating", 
-            "Cooking Time", 
-            "Alphabetical" 
+        public List<string> SortOptions { get; } = new List<string>
+        {
+            "Latest",
+            "Rating",
+            "Cooking Time",
+            "Alphabetical"
         };
 
-        public FavoritesViewModel()
+        [ObservableProperty]
+        string apiStatusMessage = string.Empty;
+
+        private readonly MockDataService _mockDataService;
+        private readonly IHttpClientService? _httpClientService;
+
+        public FavoritesViewModel(MockDataService mockDataService, IHttpClientService httpClientService)
         {
             Title = "Favorites";
-            CurrentUser = MockDataService.GetCurrentUser();
-            LoadFavorites();
+            _mockDataService = mockDataService;
+            _httpClientService = httpClientService;
+
+            CurrentUser = _mockDataService.GetCurrentUserInstance();
+            FavoriteRecipes = new ObservableCollection<Recipe>();
+
+            _ = LoadFavoritesAsync();
         }
 
-        public void LoadFavorites()
+        public FavoritesViewModel() : this(new MockDataService(), new HttpClientService())
         {
+        }
+
+        public FavoritesViewModel()
+            : this(new MockDataService(), new HttpClientService())
+        {
+        }
+
+        public async Task LoadFavoritesAsync()
+        {
+            if (IsBusy) return;
+
+            IsBusy = true;
+
             try
             {
-                var allRecipes = MockDataService.GetRecipes();
-                var favorites = allRecipes.Where(r => r.IsFavorited).ToList();
-                
-                // Apply sorting
-                var sorted = SortOption switch
+                if (_httpClientService != null)
                 {
-                    "Latest" => favorites.OrderByDescending(r => r.CreatedDate),
-                    "Rating" => favorites.OrderByDescending(r => r.Rating),
-                    "Cooking Time" => favorites.OrderBy(r => r.TotalTimeMinutes),
-                    "Alphabetical" => favorites.OrderBy(r => r.Title),
-                    _ => favorites.OrderByDescending(r => r.CreatedDate)
-                };
+                    await _httpClientService.CheckApiHealthAsync();
+                    SetApiStatus(_httpClientService.IsApiAvailable);
+                }
 
-                FavoriteRecipes = new ObservableCollection<Recipe>(sorted);
+                if (_httpClientService?.IsApiAvailable == true)
+                {
+                    await LoadFavoritesFromApiAsync();
+                }
+                else
+                {
+                    LoadFavoritesFromMock();
+                }
             }
             catch (Exception ex)
             {
-                Shell.Current.DisplayAlert("Error", $"Failed to load favorites: {ex.Message}", "OK");
+                System.Diagnostics.Debug.WriteLine($"[FavoritesViewModel] Error loading favorites: {ex.Message}");
+                LoadFavoritesFromMock();
+                SetApiStatus(false);
             }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task LoadFavoritesFromApiAsync()
+        {
+            try
+            {
+                var response = await _httpClientService!.GetAsync<RecipeListResponse>("/collections/favorites");
+
+                var list = new List<Recipe>();
+
+                if (response?.Recipes?.Any() == true)
+                {
+                    foreach (var recipe in response.Recipes)
+                    {
+                        recipe.SyncFromApi();
+                        list.Add(recipe);
+                    }
+                }
+
+                list = SortFavorites(list);
+
+                FavoriteRecipes = new ObservableCollection<Recipe>(list);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[FavoritesViewModel] API error: {ex.Message}");
+                LoadFavoritesFromMock();
+                SetApiStatus(false);
+            }
+        }
+
+        private void LoadFavoritesFromMock()
+        {
+            var allRecipes = _mockDataService.GetRecipesInstance();
+            var favorites = allRecipes.Where(r => r.IsFavorited).ToList();
+
+            favorites = SortFavorites(favorites);
+
+            FavoriteRecipes = new ObservableCollection<Recipe>(favorites);
+        }
+
+        private List<Recipe> SortFavorites(List<Recipe> favorites)
+        {
+            return SortOption switch
+            {
+                "Latest" => favorites.OrderByDescending(r => r.CreatedDate).ToList(),
+                "Rating" => favorites.OrderByDescending(r => r.Rating).ToList(),
+                "Cooking Time" => favorites.OrderBy(r => r.TotalTimeMinutes).ToList(),
+                "Alphabetical" => favorites.OrderBy(r => r.Title).ToList(),
+                _ => favorites.OrderByDescending(r => r.CreatedDate).ToList()
+            };
         }
 
         partial void OnSortOptionChanged(string value)
         {
-            LoadFavorites();
+            _ = LoadFavoritesAsync();
         }
 
         [RelayCommand]
@@ -98,13 +180,11 @@ namespace ReciptShare.ViewModels
         private async Task RefreshFavorites()
         {
             IsRefreshing = true;
-            
+
             try
             {
-                // Simulate network delay
-                await Task.Delay(1000);
-                
-                LoadFavorites();
+                await Task.Delay(500);
+                await LoadFavoritesAsync();
             }
             finally
             {
@@ -124,6 +204,7 @@ namespace ReciptShare.ViewModels
             if (!string.IsNullOrEmpty(action) && action != "Cancel")
             {
                 SortOption = action;
+                await LoadFavoritesAsync();
             }
         }
 
