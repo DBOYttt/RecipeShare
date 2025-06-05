@@ -30,7 +30,7 @@ public static class MauiProgram
         builder.Services.AddTransient<FavoritesViewModel>();
         builder.Services.AddTransient<ShoppingListViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
-        builder.Services.AddTransient<ReciptDetailViewModel>();
+        builder.Services.AddTransient<RecipeDetailViewModel>();
         builder.Services.AddTransient<AddReciptViewModel>();
         builder.Services.AddTransient<EditProfileViewModel>();
         

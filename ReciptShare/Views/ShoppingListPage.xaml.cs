@@ -6,10 +6,10 @@ public partial class ShoppingListPage : ContentPage
 {
     private ShoppingListViewModel _viewModel;
 
-    public ShoppingListPage()
+    public ShoppingListPage(ShoppingListViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = new ShoppingListViewModel();
+        _viewModel = viewModel;
         BindingContext = _viewModel;
     }
 

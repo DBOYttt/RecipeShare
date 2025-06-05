@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:ReciptShare.ViewModels"
              xmlns:models="clr-namespace:ReciptShare.Models"
-             x:DataType="viewmodels:ReciptDetailViewModel"
+             x:DataType="viewmodels:RecipeDetailViewModel"
              Title="{Binding Title}">
 
     <ScrollView>
