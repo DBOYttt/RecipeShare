@@ -4,14 +4,14 @@ namespace ReciptShare.Views;
 
 public partial class RecipeDetailPage : ContentPage
 {
-    private ReciptDetailViewModel _viewModel;
+    private RecipeDetailViewModel _viewModel;
 
-    public RecipeDetailPage()
+    public RecipeDetailPage(RecipeDetailViewModel viewModel)
     {
         try
         {
             InitializeComponent();
-            _viewModel = new ReciptDetailViewModel();
+            _viewModel = viewModel;
             BindingContext = _viewModel;
         }
         catch (Exception ex)

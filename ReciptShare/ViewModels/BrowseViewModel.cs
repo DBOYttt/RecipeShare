@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using ReciptShare.Models;
 using ReciptShare.Services;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Web;
 
 namespace ReciptShare.ViewModels
 {
@@ -29,87 +31,214 @@ namespace ReciptShare.ViewModels
         [ObservableProperty]
         string sortOption = "Latest";
 
-        public List<string> SortOptions { get; } = new List<string> 
-        { 
-            "Latest", 
-            "Popular", 
-            "Rating", 
-            "Cooking Time", 
-            "Alphabetical" 
+        public List<string> SortOptions { get; } = new List<string>
+        {
+            "Latest",
+            "Popular",
+            "Rating",
+            "Cooking Time",
+            "Alphabetical"
         };
 
-        public BrowseViewModel()
+        [ObservableProperty]
+        string apiStatusMessage = string.Empty;
+
+        private readonly MockDataService _mockDataService;
+        private readonly IHttpClientService? _httpClientService;
+
+        public BrowseViewModel(MockDataService mockDataService, IHttpClientService httpClientService)
         {
             Title = "Browse Recipes";
-            LoadData();
+            _mockDataService = mockDataService;
+            _httpClientService = httpClientService;
+
+            AllRecipes = new ObservableCollection<Recipe>();
+            FilteredRecipes = new ObservableCollection<Recipe>();
+            Categories = new ObservableCollection<string>();
+
+            _ = LoadDataAsync();
         }
 
-        private void LoadData()
+        public BrowseViewModel() : this(new MockDataService(), new HttpClientService())
         {
+        }
+
+        private async Task LoadDataAsync()
+        {
+            if (IsBusy) return;
+
+            IsBusy = true;
+
             try
             {
-                var recipes = MockDataService.GetRecipes();
-                AllRecipes = new ObservableCollection<Recipe>(recipes);
-                
-                // Get unique categories
-                var allCategories = recipes
-                    .SelectMany(r => r.Categories)
-                    .Distinct()
-                    .OrderBy(c => c)
-                    .ToList();
-                
-                allCategories.Insert(0, "All");
-                Categories = new ObservableCollection<string>(allCategories);
+                if (_httpClientService != null)
+                {
+                    await _httpClientService.CheckApiHealthAsync();
+                    SetApiStatus(_httpClientService.IsApiAvailable);
+                }
 
-                // Apply initial filtering
-                ApplyFilters();
+                if (_httpClientService?.IsApiAvailable == true)
+                {
+                    await LoadFromApiAsync();
+                }
+                else
+                {
+                    LoadFromMock();
+                }
             }
             catch (Exception ex)
             {
-                Shell.Current.DisplayAlert("Error", $"Failed to load recipes: {ex.Message}", "OK");
+                System.Diagnostics.Debug.WriteLine($"[BrowseViewModel] Error loading data: {ex.Message}");
+                LoadFromMock();
+                SetApiStatus(false);
             }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task LoadFromApiAsync()
+        {
+            try
+            {
+                var response = await _httpClientService!.GetAsync<RecipeListResponse>("/recipes?limit=50");
+
+                AllRecipes.Clear();
+
+                if (response?.Recipes?.Any() == true)
+                {
+                    foreach (var recipe in response.Recipes)
+                    {
+                        recipe.SyncFromApi();
+                        AllRecipes.Add(recipe);
+                    }
+
+                    var allCategories = response.Recipes
+                        .SelectMany(r => r.Categories)
+                        .Distinct()
+                        .OrderBy(c => c)
+                        .ToList();
+
+                    allCategories.Insert(0, "All");
+                    Categories = new ObservableCollection<string>(allCategories);
+                }
+
+                await ApplyFiltersAsync();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[BrowseViewModel] API error: {ex.Message}");
+                LoadFromMock();
+                SetApiStatus(false);
+            }
+        }
+
+        private void LoadFromMock()
+        {
+            var recipes = _mockDataService.GetRecipesInstance();
+            AllRecipes = new ObservableCollection<Recipe>(recipes);
+
+            var allCategories = recipes
+                .SelectMany(r => r.Categories)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToList();
+
+            allCategories.Insert(0, "All");
+            Categories = new ObservableCollection<string>(allCategories);
+
+            ApplyFiltersOffline();
         }
 
         partial void OnSearchTextChanged(string value)
         {
-            ApplyFilters();
+            _ = ApplyFiltersAsync();
         }
 
         partial void OnSelectedCategoryChanged(string value)
         {
-            ApplyFilters();
+            _ = ApplyFiltersAsync();
         }
 
         partial void OnSortOptionChanged(string value)
         {
-            ApplyFilters();
+            _ = ApplyFiltersAsync();
         }
 
         [RelayCommand]
-        private void ApplyFilters()
+        private async Task ApplyFiltersAsync()
+        {
+            try
+            {
+                if (_httpClientService?.IsApiAvailable == true)
+                {
+                    var query = HttpUtility.ParseQueryString(string.Empty);
+                    query["limit"] = "50";
+
+                    if (!string.IsNullOrWhiteSpace(SearchText))
+                        query["search"] = SearchText;
+
+                    if (!string.IsNullOrEmpty(SelectedCategory) && SelectedCategory != "All")
+                        query["category"] = SelectedCategory;
+
+                    query["sort"] = SortOption switch
+                    {
+                        "Latest" => "created_at",
+                        "Popular" => "likes",
+                        "Rating" => "rating",
+                        "Cooking Time" => "time",
+                        "Alphabetical" => "title",
+                        _ => "created_at"
+                    };
+
+                    var response = await _httpClientService.GetAsync<RecipeListResponse>($"/recipes?{query}");
+
+                    var filteredList = new List<Recipe>();
+
+                    if (response?.Recipes?.Any() == true)
+                    {
+                        foreach (var recipe in response.Recipes)
+                        {
+                            recipe.SyncFromApi();
+                            filteredList.Add(recipe);
+                        }
+                    }
+
+                    FilteredRecipes = new ObservableCollection<Recipe>(filteredList);
+                }
+                else
+                {
+                    ApplyFiltersOffline();
+                }
+            }
+            catch (Exception ex)
+            {
+                Shell.Current.DisplayAlert("Error", $"Failed to filter recipes: {ex.Message}", "OK");
+            }
+        }
+
+        private void ApplyFiltersOffline()
         {
             try
             {
                 var filtered = AllRecipes.AsEnumerable();
 
-                // Apply category filter
                 if (!string.IsNullOrEmpty(SelectedCategory) && SelectedCategory != "All")
                 {
                     filtered = filtered.Where(r => r.Categories.Contains(SelectedCategory));
                 }
 
-                // Apply search filter
                 if (!string.IsNullOrWhiteSpace(SearchText))
                 {
                     var searchLower = SearchText.ToLower();
-                    filtered = filtered.Where(r => 
+                    filtered = filtered.Where(r =>
                         r.Title.ToLower().Contains(searchLower) ||
                         r.Description.ToLower().Contains(searchLower) ||
                         r.AuthorName.ToLower().Contains(searchLower) ||
                         r.Categories.Any(c => c.ToLower().Contains(searchLower)));
                 }
 
-                // Apply sorting
                 filtered = SortOption switch
                 {
                     "Latest" => filtered.OrderByDescending(r => r.CreatedDate),
@@ -160,9 +289,9 @@ namespace ReciptShare.ViewModels
             try
             {
                 // Simulate network delay
-                await Task.Delay(1000);
-                
-                LoadData();
+                await Task.Delay(500);
+
+                await LoadDataAsync();
             }
             finally
             {
@@ -174,20 +303,22 @@ namespace ReciptShare.ViewModels
         private async Task ClearSearch()
         {
             SearchText = string.Empty;
+            await ApplyFiltersAsync();
         }
 
         [RelayCommand]
         private async Task ShowFilterOptions()
         {
             var action = await Shell.Current.DisplayActionSheet(
-                "Sort by", 
-                "Cancel", 
-                null, 
+                "Sort by",
+                "Cancel",
+                null,
                 SortOptions.ToArray());
 
             if (!string.IsNullOrEmpty(action) && action != "Cancel")
             {
                 SortOption = action;
+                await ApplyFiltersAsync();
             }
         }
     }
